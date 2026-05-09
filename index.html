@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ضد الكسر | DED EL KASR</title>
     
+    <!-- المكاتب الأساسية -->
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <!-- مكتبة الـ 3D المضافة -->
+    
+    <!-- مكاتب التحريك العالمية (GSAP & AOS) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
@@ -21,15 +25,16 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
-        body { background: #fdfdfd; color: #333; overflow-x: hidden; perspective: 1000px; }
+        body { background: #000; color: #333; overflow-x: hidden; perspective: 1000px; }
 
-        /* --- شريط الرول المتحرك (إضافة جديدة) --- */
+        /* --- شريط الرول المتحرك (عالمي) --- */
         .dogga-marquee {
-            background: var(--gold); color: #000; padding: 8px 0;
+            background: var(--gold); color: #000; padding: 10px 0;
             overflow: hidden; white-space: nowrap; font-weight: 900;
-            position: relative; z-index: 1000; margin-top: 80px;
+            position: fixed; top: 75px; z-index: 1500; width: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
-        .marquee-inner { display: inline-block; animation: slideRight 25s linear infinite; }
+        .marquee-inner { display: inline-block; animation: slideRight 20s linear infinite; }
         @keyframes slideRight { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
 
         header {
@@ -37,99 +42,71 @@
             background: var(--white-glass); display: flex; 
             justify-content: space-between; align-items: center;
             z-index: 2000; border-bottom: 3px solid var(--gold);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         .logo-box { font-size: 1.8rem; font-weight: 900; color: #000; }
-        .nav-left { display: flex; align-items: center; gap: 15px; }
-        .fb-link { color: #1877F2; font-size: 1.6rem; transition: 0.3s; }
         .btn-order { 
             background: var(--whatsapp); color: #fff; padding: 10px 22px; 
             border-radius: 50px; font-weight: 900; text-decoration: none; 
-            display: flex; align-items: center; gap: 10px; font-size: 0.9rem;
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); transition: 0.3s;
+            display: flex; align-items: center; gap: 10px; transition: 0.3s;
         }
-        .btn-order:hover { transform: scale(1.05); filter: brightness(1.1); }
 
+        /* --- قسم الـ Hero التفاعلي 3D --- */
         .hero {
-            height: 100vh; width: 100%;
-            background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.1)), 
-                        url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=2070');
-            background-size: cover; background-position: center;
-            display: flex; justify-content: center; align-items: center;
+            height: 250vh; /* مساحة للسكرول والحركة */
+            position: relative;
+            background: #111;
         }
+        .hero-sticky {
+            position: sticky; top: 0; height: 100vh; width: 100%;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        /* الصورة اللي بتتحرك */
+        #heroChar {
+            position: absolute; width: 100%; height: 100%; object-fit: cover;
+            z-index: 1; filter: brightness(0.7);
+        }
+        /* الابتسامة (تظهر عند السكرول) */
+        #heroCharSmile {
+            position: absolute; width: 100%; height: 100%; object-fit: cover;
+            z-index: 2; opacity: 0;
+        }
+
         .hero-card {
-            background: rgba(255, 255, 255, 0.96); padding: 60px 40px; 
-            border-radius: 40px; border: 2px solid var(--gold); 
-            max-width: 850px; margin: 20px; text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.1) !important; /* شفافية زجاجية */
+            backdrop-filter: blur(15px);
+            padding: 60px 40px; border-radius: 40px; border: 2px solid var(--gold); 
+            max-width: 850px; text-align: center; position: relative; z-index: 10;
         }
-        .hero-card h1 { font-size: clamp(2rem, 5vw, 3.5rem); color: #000; font-weight: 900; margin-bottom: 20px; }
-        .hero-card p { font-size: 1.25rem; color: #444; font-weight: 700; line-height: 1.9; }
+        .hero-card h1 { font-size: 3.5rem; color: #fff; font-weight: 900; text-shadow: 2px 2px 10px #000; }
+        .hero-card p { font-size: 1.3rem; color: #eee; font-weight: 700; text-shadow: 1px 1px 5px #000; }
 
-        .specs { padding: 100px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        /* --- معرض الأعمال والخيارات --- */
+        .specs { padding: 100px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; background: #fff;}
         .spec-card { 
-            background: #fff; padding: 80px 35px; border-radius: 30px; 
-            border: 1px solid #eee; text-align: center; min-height: 700px; 
-            display: flex; flex-direction: column; justify-content: center; transition: 0.4s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            background: #fff; padding: 60px 35px; border-radius: 30px; 
+            border: 1px solid #eee; text-align: center; transition: 0.4s;
         }
-        .spec-card:hover { transform: translateY(-12px) rotateY(10deg); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-        .spec-card i { font-size: 4.5rem; color: var(--gold); margin-bottom: 30px; }
-        .spec-card h3 { font-size: 2.1rem; font-weight: 900; margin-bottom: 25px; color: #000; }
-        .spec-card p { font-size: 1.1rem; line-height: 2; color: #555; text-align: justify; }
+        .spec-card:hover { transform: translateY(-10px) rotateY(10deg); border-color: var(--gold); }
 
-        .section-title { text-align: center; font-size: 3rem; font-weight: 900; margin: 80px 0 50px; color: #000; }
-        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; padding: 0 5% 100px; }
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; padding: 50px 5%; background: #fff; }
+        .work-card { background: #fff; border-radius: 25px; overflow: hidden; border: 1px solid #eee; transition: 0.5s; }
         
-        .work-card { 
-            background: #fff; border-radius: 25px; overflow: hidden; border: 1px solid #eee; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.5s; 
-        }
-        .work-card:hover { transform: scale(1.02); }
-
-        .img-box { height: 450px; width: 100%; cursor: pointer; overflow: hidden; position: relative; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
-        
-        /* --- أزرار الخيارات الجديدة داخل الكارت --- */
         .work-options {
-            display: flex; justify-content: space-around; padding: 15px 10px;
-            background: #f9f9f9; border-top: 1px solid #eee;
+            display: flex; justify-content: space-around; padding: 15px;
+            background: #f1f1f1; border-top: 1px solid var(--gold);
         }
         .opt-btn {
-            background: #fff; border: 1px solid var(--gold); color: #333;
-            padding: 8px 12px; border-radius: 10px; font-weight: 700; font-size: 0.8rem;
-            cursor: pointer; transition: 0.3s;
+            background: #fff; border: 1px solid var(--gold); padding: 8px 15px;
+            border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s;
         }
         .opt-btn:hover { background: var(--gold); color: #fff; }
 
-        .work-details { padding: 20px; text-align: center; background: #fff; display: flex; flex-direction: column; gap: 12px; }
-        .work-details h4 { font-weight: 900; font-size: 1.1rem; color: #222; }
-        
-        .btn-query { 
-            background: var(--whatsapp); color: #fff; padding: 14px; 
-            border-radius: 12px; text-decoration: none; display: flex; 
-            justify-content: center; align-items: center; gap: 10px; 
-            font-weight: 900; font-size: 0.95rem; transition: 0.3s;
-        }
-        .btn-query:hover { background: #1ebe57; transform: translateY(-2px); }
-
-        footer { background: #000; color: #fff; padding: 50px 5%; text-align: center; border-top: 6px solid var(--gold); width: 100%; }
-        .sig { font-size: 1.3rem; font-weight: 700; word-spacing: 5px; }
+        footer { background: #000; color: #fff; padding: 50px; text-align: center; border-top: 6px solid var(--gold); }
         .sig span { color: var(--gold); }
 
         #adminPanel { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 5000; align-items: center; justify-content: center; }
-        .admin-modal { background: #fff; padding: 40px; border-radius: 25px; width: 95%; max-width: 500px; }
-        .admin-modal input { width: 100%; padding: 14px; margin: 12px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; }
-        .admin-modal button { width: 100%; padding: 15px; background: var(--gold); border: none; border-radius: 10px; font-weight: 900; cursor: pointer; margin-top: 10px; font-size: 1.1rem; }
-
-        #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 6000; justify-content: center; align-items: center; padding: 20px; }
-        #lightbox img { max-width: 100%; max-height: 85vh; border: 4px solid var(--gold); border-radius: 15px; }
-
-        @media (max-width: 768px) {
-            .gallery-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-            .img-box { height: 250px; }
-            .btn-query { font-size: 0.7rem; padding: 10px; gap: 5px; }
-        }
+        .admin-modal { background: #fff; padding: 40px; border-radius: 25px; width: 450px; }
+        .admin-modal input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; }
     </style>
 </head>
 <body ondblclick="openAdmin()">
@@ -137,76 +114,84 @@
     <header>
         <div class="logo-box">ضد الكسر</div>
         <div class="nav-left">
-            <a href="https://facebook.com/DED_EL_KASR" class="fb-link"><i class="fab fa-facebook"></i></a>
-            <a href="https://wa.me/201144265938?text=أريد طلب معاينة لمطبخ" class="btn-order">
-                <i class="fab fa-whatsapp"></i> اطلب المعاينة
-            </a>
+            <a href="https://facebook.com/DED_EL_KASR" style="color:#1877F2; font-size:1.6rem;"><i class="fab fa-facebook"></i></a>
+            <a href="https://wa.me/201144265938" class="btn-order"><i class="fab fa-whatsapp"></i> اطلب المعاينة</a>
         </div>
     </header>
 
-    <!-- الرول المتحرك المضاف -->
     <div class="dogga-marquee">
         <div class="marquee-inner">
-             ضجة للمطابخ الالمونتال 🛡️ دقة هندسية DOGGA SYSTEM 🛡️ جودة ضد الكسر 🛡️ إشراف م/ ياسين علاء وم/ أحمد السيد 🛡️ عالم من الإبداع 🛡️ 
+            ضجة للمطابخ الالمونتال 🛡️ دقة هندسية DOGGA SYSTEM 🛡️ جودة ضد الكسر 🛡️ إشراف م/ ياسين علاء وم/ أحمد السيد 🛡️
         </div>
     </div>
 
     <section class="hero">
-        <div class="hero-card" data-aos="zoom-in">
-            <h1>🛡️ ضد الكسر للمطابخ</h1>
-            <p>نحن نصمم لك مطبخاً يجمع بين القوة الهندسية والجمال العصري. باستخدام نظام DOGGA SYSTEM المبتكر، نضمن لك جودة تقفيل عالمية وتخصيمات دقيقة بنسبة 100% تحت إشراف نخبة من المهندسين المتخصصين.</p>
+        <div class="hero-sticky">
+            <!-- الصور التفاعلية -->
+            <img src="IMAGE_STAND_URL" id="heroChar"> <!-- صورة الشخصية واقفة -->
+            <img src="IMAGE_SMILE_URL" id="heroCharSmile"> <!-- صورة الشخصية بتبتسم -->
+            
+            <div class="hero-card" id="textCard">
+                <h1>🛡️ ضد الكسر للمطابخ</h1>
+                <p>نحن نصمم لك مطبخاً يجمع بين القوة الهندسية والجمال العصري باستخدام نظام DOGGA SYSTEM المبتكر.</p>
+            </div>
         </div>
     </section>
 
     <section class="specs">
-        <div class="spec-card" data-aos="flip-left">
-            <i class="fas fa-tools"></i>
-            <h3>خامات صلبة وقوية</h3>
-            <p>نستخدم ألومنيوم ثقيل الوزن ومعالج ضد الرطوبة والحرارة العالية، مع إكسسوارات إيطالية وتركية أصلية ومفصلات هيدروليك ناعمة. مطبخك مصمم ليعيش سنوات طويلة دون صيانة، ليكون واجهة منزلك "ضد الكسر" فعلياً.</p>
-        </div>
-        <div class="spec-card" data-aos="flip-up">
-            <i class="fas fa-pencil-ruler"></i>
+        <div class="spec-card" data-aos="zoom-in">
+            <i class="fas fa-tools" style="font-size: 3rem; color: var(--gold);"></i>
             <h3>DOGGA SYSTEM</h3>
-            <p> نستخدم نظام DOGGA لضمان دقة متناهية في حسابات التقطيع والتقفيل. هذا النظام يمنع أي أخطاء بشرية، ويضمن لك استلام منتج نهائي متناسق تماماً مع مساحة منزلك بكل احترافية ودقة متناهية.</p>
+            <p>دقة متناهية في حسابات التقطيع تمنع أي خطأ بشري وتضمن استلام مطبخ هندسي 100%.</p>
         </div>
-        <div class="spec-card" data-aos="flip-right">
-            <i class="fas fa-gem"></i>
-            <h3>رخام وجرانيت فاخر</h3>
-            <p>أجود أنواع الجرانيت الطبيعي المقاوم للخدوش والبقع، بتشطيب "لمعة المرايا". نستخدم تقنيات دمج تمنع تسرب المياه نهائياً، مما يحافظ على نظافة الوحدات وعمر المطبخ الافتراضي لأقصى درجة ممكنة.</p>
+        <div class="spec-card" data-aos="zoom-in">
+            <i class="fas fa-gem" style="font-size: 3rem; color: var(--gold);"></i>
+            <h3>خامات عالمية</h3>
+            <p>ألومنيوم ثقيل معالج ضد الرطوبة مع إكسسوارات إيطالية هيدروليك تدوم لسنوات.</p>
         </div>
     </section>
 
-    <h2 class="section-title">أحدث أعمالنا</h2>
+    <h2 style="text-align:center; padding:50px 0; background:#fff; font-size:2.5rem;">أحدث أعمالنا</h2>
     <div class="gallery-grid" id="mainGallery"></div>
-
-    <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg"></div>
 
     <div id="adminPanel">
         <div class="admin-modal">
-            <h2 style="margin-bottom:10px;">لوحة إدارة الأعمال</h2>
-            <input type="text" id="inpUrl" placeholder="رابط الصورة المباشر">
-            <input type="text" id="inpName" placeholder="اسم المطبخ">
+            <h2>إدارة إمبراطورية DOGGA</h2>
+            <input type="text" id="inpUrl" placeholder="رابط الصورة">
+            <input type="text" id="inpName" placeholder="اسم الموديل">
             <input type="text" id="inpPrice" placeholder="السعر">
-            <input type="text" id="inpDetail" placeholder="التفاصيل (الخامة/النوع)">
-            <button onclick="saveWork()">نشر العمل الآن</button>
-            <div id="adminDelList" style="max-height:150px; overflow-y:auto; margin-top:20px; border-top:1px solid #eee;"></div>
-            <button onclick="document.getElementById('adminPanel').style.display='none'" style="background:none; color:gray; font-size:0.9rem; margin-top:10px;">إغلاق</button>
+            <input type="text" id="inpDetail" placeholder="التفاصيل الهندسية">
+            <button onclick="saveWork()" style="width:100%; padding:15px; background:var(--gold); border:none; border-radius:10px; font-weight:900; cursor:pointer;">نشر الآن</button>
+            <button onclick="document.getElementById('adminPanel').style.display='none'" style="width:100%; margin-top:10px; background:none; border:none; color:gray;">إغلاق</button>
         </div>
     </div>
 
     <footer>
-        <div class="sig">
-            اشراف المهندس <span>ياسين علاء</span> والمهندس <span>أحمد السيد</span> © 2026 - جميع الحقوق محفوظة لشركة ضجه 
-        </div>
+        <div class="sig">إشراف المهندس <span>ياسين علاء</span> والمهندس <span>أحمد السيد</span> © 2026</div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
+        gsap.registerPlugin(ScrollTrigger);
+
         const firebaseConfig = { databaseURL: "https://ded-el-kasr-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // تحريك الشخصية مع السكرول
+        gsap.to("#heroChar", {
+            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom bottom", scrub: 1.5 },
+            scale: 1.2, x: "-15%", duration: 2
+        });
+
+        // ظهور الابتسامة عند نقطة معينة
+        gsap.to("#heroCharSmile", {
+            scrollTrigger: { trigger: ".hero", start: "50% top", end: "70% top", scrub: true },
+            opacity: 1
+        });
+
+        // تحميل الأعمال مع نظام الخيارات (أسعار/أشكال/تفاصيل)
         db.ref('works').on('value', (snapshot) => {
             const grid = document.getElementById('mainGallery');
             grid.innerHTML = '';
@@ -214,65 +199,33 @@
                 const data = child.val();
                 grid.innerHTML += `
                     <div class="work-card" data-aos="fade-up">
-                        <div class="img-box" onclick="openLightbox('${data.url}')">
-                            <img src="${data.url}" loading="lazy">
-                        </div>
-                        <!-- أزرار الخيارات المضافة -->
+                        <img src="${data.url}" style="width:100%; height:400px; object-fit:cover;">
                         <div class="work-options">
-                            <button class="opt-btn" onclick="alert('السعر: ${data.price || 'حسب المواصفات'}')">الأسعار</button>
+                            <button class="opt-btn" onclick="alert('السعر: ${data.price || 'اتصل بنا'}')">الأسعار</button>
                             <button class="opt-btn" onclick="alert('موديل: ${data.name}')">الأشكال</button>
-                            <button class="opt-btn" onclick="alert('التفاصيل: ${data.detail || 'شغل عمولة جودة عالية'}')">التفاصيل</button>
+                            <button class="opt-btn" onclick="alert('تفاصيل: ${data.detail || 'خامات عالية الجودة'}')">التفاصيل</button>
                         </div>
-                        <div class="work-details">
+                        <div style="padding:20px; text-align:center;">
                             <h4>${data.name}</h4>
-                            <a href="https://wa.me/201144265938?text=استفسار بخصوص مطبخ: ${data.name}" class="btn-query">
-                                <i class="fab fa-whatsapp"></i> الاستفسار عن المطبخ
-                            </a>
                         </div>
                     </div>`;
             });
         });
 
-        function openLightbox(url) {
-            document.getElementById('lightboxImg').src = url;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
-
         function openAdmin() {
-            if(prompt("كلمة سر المهندس:") === "13579") {
-                document.getElementById('adminPanel').style.display = 'flex';
-                loadAdminList();
-            }
+            if(prompt("كلمة سر السيستم:") === "13579") document.getElementById('adminPanel').style.display = 'flex';
         }
 
         function saveWork() {
             const url = document.getElementById('inpUrl').value;
-            const name = document.getElementById('inpName').value || "موديل جديد";
-            const price = document.getElementById('inpPrice').value || "اتصل لمعرفة السعر";
-            const detail = document.getElementById('inpDetail').value || "ألومنيوم عالي الجودة";
-            if(!url) return alert("يرجى وضع رابط الصورة");
+            const name = document.getElementById('inpName').value;
+            const price = document.getElementById('inpPrice').value;
+            const detail = document.getElementById('inpDetail').value;
+            if(!url) return alert("فين الصورة؟");
             db.ref('works').push({ url, name, price, detail }).then(() => {
-                document.getElementById('inpUrl').value = '';
-                document.getElementById('inpName').value = '';
-                document.getElementById('inpPrice').value = '';
-                document.getElementById('inpDetail').value = '';
+                document.getElementById('adminPanel').style.display = 'none';
             });
         }
-
-        function loadAdminList() {
-            const list = document.getElementById('adminDelList');
-            db.ref('works').on('value', (snapshot) => {
-                list.innerHTML = '';
-                snapshot.forEach((child) => {
-                    list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #f0f0f0;">
-                        <span style="font-size:0.8rem">${child.val().name}</span>
-                        <button onclick="deleteWork('${child.key}')" style="color:red; background:none; border:none; cursor:pointer;">حذف</button>
-                    </div>`;
-                });
-            });
-        }
-
-        function deleteWork(id) { if(confirm("هل أنت متأكد؟")) db.ref('works').child(id).remove(); }
     </script>
 </body>
 </html>
