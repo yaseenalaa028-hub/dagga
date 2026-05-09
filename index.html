@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ضد الكسر | DED EL KASR</title>
     
-    <!-- المكاتب الأساسية -->
+    <!-- المكاتب الأساسية (Firebase الأصلية الخاصة بك) -->
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
-    <!-- مكاتب التحريك العالمية (GSAP & AOS) -->
+    <!-- مكاتب التحريك (GSAP & ScrollTrigger) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -27,7 +27,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
         body { background: #000; color: #333; overflow-x: hidden; perspective: 1000px; }
 
-        /* --- شريط الرول المتحرك (عالمي) --- */
+        /* --- شريط الرول المتحرك --- */
         .dogga-marquee {
             background: var(--gold); color: #000; padding: 10px 0;
             overflow: hidden; white-space: nowrap; font-weight: 900;
@@ -50,9 +50,9 @@
             display: flex; align-items: center; gap: 10px; transition: 0.3s;
         }
 
-        /* --- قسم الـ Hero التفاعلي 3D --- */
+        /* --- تطوير قسم الـ Hero ليصبح تفاعلي 3D --- */
         .hero {
-            height: 250vh; /* مساحة للسكرول والحركة */
+            height: 300vh; /* زيادة المساحة لتعزيز سلاسة الحركة مع السكرول */
             position: relative;
             background: #111;
         }
@@ -60,27 +60,29 @@
             position: sticky; top: 0; height: 100vh; width: 100%;
             display: flex; align-items: center; justify-content: center; overflow: hidden;
         }
-        /* الصورة اللي بتتحرك */
-        #heroChar {
-            position: absolute; width: 100%; height: 100%; object-fit: cover;
-            z-index: 1; filter: brightness(0.7);
-        }
-        /* الابتسامة (تظهر عند السكرول) */
-        #heroCharSmile {
-            position: absolute; width: 100%; height: 100%; object-fit: cover;
-            z-index: 2; opacity: 0;
-        }
 
+        /* تحسين وضع الصور التفاعلية */
+        #heroChar, #heroCharSmile {
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            filter: brightness(0.8);
+        }
+        #heroChar { z-index: 1; }
+        #heroCharSmile { z-index: 2; opacity: 0; } /* الابتسامة تظهر برمجياً لاحقاً */
+
+        /* الكارت الشفاف تماماً (الزجاجي) كما طلبت */
         .hero-card {
-            background: rgba(255, 255, 255, 0.1) !important; /* شفافية زجاجية */
-            backdrop-filter: blur(15px);
-            padding: 60px 40px; border-radius: 40px; border: 2px solid var(--gold); 
+            background: rgba(255, 255, 255, 0.05) !important; /* شفافية عالية جداً */
+            backdrop-filter: blur(12px); /* تأثير ضبابي لإبراز النص */
+            padding: 60px 40px; border-radius: 40px; border: 1.5px solid rgba(212, 175, 55, 0.4); 
             max-width: 850px; text-align: center; position: relative; z-index: 10;
         }
-        .hero-card h1 { font-size: 3.5rem; color: #fff; font-weight: 900; text-shadow: 2px 2px 10px #000; }
-        .hero-card p { font-size: 1.3rem; color: #eee; font-weight: 700; text-shadow: 1px 1px 5px #000; }
+        .hero-card h1 { font-size: 3.5rem; color: #fff; font-weight: 900; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .hero-card p { font-size: 1.3rem; color: #f0f0f0; font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
-        /* --- معرض الأعمال والخيارات --- */
+        /* --- معرض الأعمال --- */
         .specs { padding: 100px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; background: #fff;}
         .spec-card { 
             background: #fff; padding: 60px 35px; border-radius: 30px; 
@@ -127,9 +129,9 @@
 
     <section class="hero">
         <div class="hero-sticky">
-            <!-- الصور التفاعلية -->
-            <img src="IMAGE_STAND_URL" id="heroChar"> <!-- صورة الشخصية واقفة -->
-            <img src="IMAGE_SMILE_URL" id="heroCharSmile"> <!-- صورة الشخصية بتبتسم -->
+            <!-- الصور التفاعلية - استبدل الروابط بالصور الخاصة بك -->
+            <img src="IMAGE_STAND_URL" id="heroChar"> 
+            <img src="IMAGE_SMILE_URL" id="heroCharSmile"> 
             
             <div class="hero-card" id="textCard">
                 <h1>🛡️ ضد الكسر للمطابخ</h1>
@@ -175,23 +177,40 @@
         AOS.init();
         gsap.registerPlugin(ScrollTrigger);
 
+        // إعدادات Firebase الخاصة بك
         const firebaseConfig = { databaseURL: "https://ded-el-kasr-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // تحريك الشخصية مع السكرول
-        gsap.to("#heroChar", {
-            scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom bottom", scrub: 1.5 },
-            scale: 1.2, x: "-15%", duration: 2
+        // منطق التحريك الاحترافي (المشي للمطبخ + الابتسامة)
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".hero",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1.5,
+            }
         });
 
-        // ظهور الابتسامة عند نقطة معينة
-        gsap.to("#heroCharSmile", {
-            scrollTrigger: { trigger: ".hero", start: "50% top", end: "70% top", scrub: true },
-            opacity: 1
-        });
+        // المرحلة الأولى: الشخصية تتحرك من البوتاجاز إلى المطبخ
+        tl.to("#heroChar, #heroCharSmile", {
+            scale: 1.3,        // تكبير لإعطاء إيحاء بالاقتراب
+            xPercent: -20,     // حركة أفقية باتجاه المطبخ
+            duration: 1
+        })
+        // المرحلة الثانية: ظهور الابتسامة تدريجياً أثناء الحركة
+        .to("#heroCharSmile", {
+            opacity: 1,
+            duration: 0.5
+        }, "-=0.5") // تداخل مع الحركة
+        // المرحلة الثالثة: تحريك النص للأعلى واختفاؤه تدريجياً لعدم حجب الرؤية
+        .to("#textCard", {
+            y: -100,
+            opacity: 0,
+            duration: 0.8
+        }, 0);
 
-        // تحميل الأعمال مع نظام الخيارات (أسعار/أشكال/تفاصيل)
+        // تحميل الأعمال من Firebase (منطقك الأصلي)
         db.ref('works').on('value', (snapshot) => {
             const grid = document.getElementById('mainGallery');
             grid.innerHTML = '';
