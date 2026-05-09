@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ضجه | مطابخ فاخرة - ضجه سيستيم</title>
+    <title>ضجه | مطابخ فاخرة</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
@@ -26,7 +26,6 @@
         }
         body { background: #fff; }
         
-        /* الهيدر */
         header {
             position: fixed;
             top: 0;
@@ -42,9 +41,14 @@
             flex-wrap: wrap;
             gap: 8px;
         }
-        .logo { display: flex; align-items: center; gap: 8px; }
-        .logo img { height: 40px; }
-        .logo span { font-size: 1.3rem; font-weight: 900; }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .logo img { height: 40px; pointer-events: none; }
+        .logo span { font-size: 1.3rem; font-weight: 900; pointer-events: none; }
         .nav-buttons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .fb-btn { background: var(--facebook); color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; }
         .inspect-btn, .whatsapp-btn { padding: 6px 15px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; text-decoration: none; display: flex; align-items: center; gap: 5px; border: none; cursor: pointer; }
@@ -53,7 +57,6 @@
         .cart-icon { position: relative; cursor: pointer; font-size: 1.3rem; }
         .cart-count { position: absolute; top: -8px; right: -10px; background: var(--gold); border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: 900; }
         
-        /* شريط الرول */
         .top-scroll {
             background: var(--dark);
             color: var(--gold);
@@ -78,10 +81,9 @@
             100% { transform: translateX(-50%); }
         }
         
-        /* الهيرو */
         .hero {
             margin-top: 110px;
-            height: 75vh;
+            height: 70vh;
             background-image: url('https://images.pexels.com/photos/1571460/kitchen-home-design-modern-1571460.jpeg?auto=compress&cs=tinysrgb&w=1600');
             background-size: cover;
             background-position: center;
@@ -93,11 +95,10 @@
         }
         .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); }
         .hero-content { position: relative; color: white; padding: 20px; max-width: 800px; }
-        .hero-content h1 { font-size: 2.5rem; margin-bottom: 15px; }
+        .hero-content h1 { font-size: 2.2rem; margin-bottom: 15px; }
         .hero-content h1 span { color: var(--gold); }
-        .hero-content p { font-size: 1.1rem; line-height: 1.6; }
+        .hero-content p { font-size: 1rem; line-height: 1.6; }
         
-        /* المهندسين */
         .engineers {
             background: linear-gradient(135deg, var(--dark), #1a1a2e);
             color: white;
@@ -105,7 +106,6 @@
             padding: 25px;
         }
         
-        /* المميزات */
         .features {
             padding: 50px 5%;
             display: grid;
@@ -122,55 +122,37 @@
         .feature i { font-size: 2rem; color: var(--gold); margin-bottom: 12px; }
         .feature h3 { margin-bottom: 8px; }
         
-        /* الضمانات الجديدة */
         .warranty {
             background: var(--dark);
             color: white;
             padding: 50px 5%;
             text-align: center;
         }
-        .warranty h2 {
-            color: var(--gold);
-            margin-bottom: 25px;
-        }
+        .warranty h2 { color: var(--gold); margin-bottom: 25px; }
         .warranty-box {
             background: rgba(255,255,255,0.08);
-            padding: 30px;
+            padding: 25px;
             border-radius: 20px;
             max-width: 900px;
             margin: 0 auto;
             text-align: right;
-            line-height: 1.8;
         }
-        .warranty-box p {
-            margin: 15px 0;
-            font-size: 1rem;
-        }
-        .warranty-box i {
-            color: var(--gold);
-            margin-left: 10px;
-        }
+        .warranty-box p { margin: 12px 0; }
         .contract-btn {
             background: var(--gold);
             color: var(--dark);
             border: none;
-            padding: 12px 30px;
+            padding: 10px 25px;
             border-radius: 35px;
             font-weight: 900;
-            margin-top: 25px;
+            margin-top: 20px;
             cursor: pointer;
-            font-size: 1rem;
         }
         
-        /* المنتجات */
         .products {
             padding: 50px 5%;
         }
-        .title {
-            text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 40px;
-        }
+        .title { text-align: center; font-size: 1.8rem; margin-bottom: 40px; }
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -182,19 +164,15 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             border: 1px solid #eee;
-            transition: 0.3s;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
         .card img { width: 100%; height: 200px; object-fit: cover; }
         .card-info { padding: 15px; }
-        .card-info h4 { font-size: 1.1rem; margin-bottom: 5px; }
         .price { color: var(--gold); font-weight: 900; font-size: 1.1rem; margin: 8px 0; }
         .card-buttons { display: flex; gap: 10px; margin-top: 10px; }
         .cart-btn, .buy-btn { flex: 1; padding: 8px; border-radius: 25px; font-weight: 700; cursor: pointer; border: none; }
         .cart-btn { background: #f0f0f0; }
-        .buy-btn { background: var(--gold); color: #000; }
+        .buy-btn { background: var(--gold); }
         
-        /* السلة */
         .sidebar {
             position: fixed;
             top: 0;
@@ -211,7 +189,6 @@
         .sidebar.open { right: 0; }
         .close-side { position: absolute; top: 15px; right: 15px; font-size: 1.3rem; cursor: pointer; }
         
-        /* المودالات */
         .modal {
             display: none;
             position: fixed;
@@ -224,9 +201,9 @@
         .modal.active { display: flex; }
         .modal-box {
             background: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 20px;
-            width: 400px;
+            width: 420px;
             max-width: 90%;
             max-height: 80%;
             overflow-y: auto;
@@ -238,14 +215,7 @@
             border-radius: 10px;
             border: 1px solid #ddd;
         }
-        .pay-opt {
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 700;
-        }
+        .pay-opt { padding: 12px; margin: 8px 0; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 700; }
         .pay-cash { background: #f0f0f0; }
         .pay-instapay { background: #4B0082; color: white; }
         
@@ -270,7 +240,6 @@
             color: white;
             z-index: 100;
             text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         @media (max-width: 600px) {
             .hero-content h1 { font-size: 1.5rem; }
@@ -278,10 +247,10 @@
         }
     </style>
 </head>
-<body ondblclick="openAdmin()">
+<body>
 
     <header>
-        <div class="logo">
+        <div class="logo" id="secretLogo">
             <img src="https://i.ibb.co/Ldvz14jx/Chat-GPT-Image-9-2026-12-22-29.png" alt="ضجه">
             <span>ضجه</span>
         </div>
@@ -296,71 +265,61 @@
         </div>
     </header>
 
-    <!-- شريط الرول -->
     <div class="top-scroll">
-        <span>✨ ضجه سيستيم | شغل معمول بإتقان، وتشطيب يبان من أول نظرة | تصميمات مودرن، خامات قوية، وتفاصيل معمولة علشان تعيش وتدي فخامة حقيقية لكل مكان | ضمان 5 سنوات ضد عيوب الصناعة | توصيل وتركيب باحترافية ✨</span>
+        <span>✨ ضجه سيستيم | شغل معمول بإتقان، وتشطيب يبان من أول نظرة | تصميمات مودرن، خامات قوية | ضمان 5 سنوات ضد عيوب الصناعة | توصيل وتركيب باحترافية ✨</span>
     </div>
 
-    <!-- الهيرو -->
     <section class="hero">
         <div class="hero-content">
             <h1>أهلاً بكم في <span>ضجه</span></h1>
-            <p>نصمم لك مطبخاً يجمع بين القوة الهندسية والجمال العصري باستخدام نظام DOGGA SYSTEM المبتكر. دقة متناهية في التقطيع، خامات عالمية ضد الرطوبة، تشطيب يبان من أول نظرة. شغل معمول بإتقان، وتفاصيل معمولة علشان تعيش وتدي فخامة حقيقية لكل مكان. فريق خبراء في التركيب، وتوصيل لجميع المحافظات من عربيات المصنع، وهتسلم مطبخك على الحيطه راكب باحترافية.</p>
+            <p>نصمم لك مطبخاً يجمع بين القوة الهندسية والجمال العصري باستخدام نظام ضجه سيستيم المبتكر. دقة متناهية في التقطيع، خامات عالمية ضد الرطوبة، تشطيب يبان من أول نظرة. فريق خبراء في التركيب، وتوصيل لجميع المحافظات، وهتسلم مطبخك على الحيطه راكب.</p>
         </div>
     </section>
 
-    <!-- المهندسين -->
     <section class="engineers">
         <p>تحت إشراف <strong>المهندس أحمد السيد</strong> | <strong>المهندس ياسين علاء</strong></p>
-        <p style="font-size:0.8rem; margin-top:5px;">خبرة أكثر من 10 سنوات في تصميم وتنفيذ المطابخ الفاخرة</p>
     </section>
 
-    <!-- المميزات -->
     <section class="features">
-        <div class="feature"><i class="fas fa-microchip"></i><h3>ضجه سيستيم</h3><p>دقة متناهية في حسابات التقطيع تمنع أي خطأ بشري وتضمن استلام مطبخ هندسي 100%</p></div>
-        <div class="feature"><i class="fas fa-gem"></i><h3>خامات قوية</h3><p>ألومنيوم ثقيل معالج ضد الرطوبة مع إكسسوارات إيطالية هيدروليك تدوم لسنوات طويلة</p></div>
-        <div class="feature"><i class="fas fa-crown"></i><h3>فخامة حقيقية</h3><p>تشطيب يبان من أول نظرة وتفاصيل معمولة بأعلى كفاءة وأفضل جودة</p></div>
+        <div class="feature"><i class="fas fa-microchip"></i><h3>ضجه سيستيم</h3><p>دقة متناهية في التقطيع تمنع أي خطأ بشري</p></div>
+        <div class="feature"><i class="fas fa-gem"></i><h3>خامات قوية</h3><p>ألومنيوم ثقيل معالج ضد الرطوبة</p></div>
+        <div class="feature"><i class="fas fa-crown"></i><h3>فخامة حقيقية</h3><p>تشطيب يبان من أول نظرة</p></div>
     </section>
 
-    <!-- الضمانات الجديدة -->
     <section class="warranty">
-        <h2><i class="fas fa-file-contract"></i> الضمانات</h2>
+        <h2>الضمانات</h2>
         <div class="warranty-box">
-            <p><i class="fas fa-file-signature"></i> <strong>عقد اتفاق يتم التوقيع عليه من العميل والمصنع</strong> - بكل ما ورد من اتفاق بين الطرفين، يضمن حقوقك ويوضح الالتزامات.</p>
-            <p><i class="fas fa-certificate"></i> <strong>شهادة ضمان 5 سنوات</strong> - ضد عيوب الصناعة، يتم تسليمها مع استلام المطبخ مباشرة.</p>
-            <p><i class="fas fa-tools"></i> <strong>فريق تركيب خبراء</strong> - متخصصون في تركيب المطابخ بأعلى كفاءة وفي أسرع وقت ممكن.</p>
-            <p><i class="fas fa-truck"></i> <strong>توصيل لجميع المحافظات</strong> - من عربيات المصنع، وفريق التركيب يكون مع العربية.</p>
-            <p><i class="fas fa-hand-sparkles"></i> <strong>هتستلم مطبخك على الحيطه راكب</strong> - جاهز تماماً للاستخدام، بدون أي عناء من جانبك.</p>
+            <p>📄 عقد اتفاق يتم التوقيع عليه من العميل والمصنع</p>
+            <p>🛡️ شهادة ضمان 5 سنوات ضد عيوب الصناعة مع استلام المطبخ</p>
+            <p>🔧 فريق تركيب خبراء في أسرع وقت</p>
+            <p>🚚 توصيل لجميع المحافظات من عربيات المصنع</p>
+            <p>🏠 فريق تركيب مع العربية - هتستلم مطبخك على الحيطه راكب</p>
         </div>
-        <button class="contract-btn" onclick="openContract()"><i class="fas fa-file-signature"></i> نموذج عقد الاتفاق</button>
+        <button class="contract-btn" onclick="openContract()">نموذج عقد الاتفاق</button>
     </section>
 
-    <!-- المنتجات -->
     <section class="products" id="products">
-        <h2 class="title">✨ منتجاتنا ✨</h2>
+        <h2 class="title">منتجاتنا</h2>
         <div class="product-grid" id="productGrid"></div>
     </section>
 
-    <!-- السلة -->
     <div class="sidebar" id="sidebar">
         <div class="close-side" onclick="toggleSidebar()"><i class="fas fa-times"></i></div>
-        <h3><i class="fas fa-shopping-cart"></i> سلة التسوق</h3>
+        <h3>سلة التسوق</h3>
         <div id="cartList"></div>
         <div id="cartTotal" style="font-weight:900; margin:20px 0;">الإجمالي: 0 جنيه</div>
         <button onclick="showPayment()" style="width:100%; background:var(--gold); border:none; padding:12px; border-radius:30px; font-weight:900; cursor:pointer;">إتمام الشراء</button>
     </div>
 
-    <!-- مودال الدفع -->
     <div class="modal" id="paymentModal">
         <div class="modal-box">
             <h3>اختر طريقة الدفع</h3>
-            <div class="pay-opt pay-cash" onclick="selectPay('cash')"><i class="fas fa-money-bill-wave"></i> كاش عند الاستلام</div>
-            <div class="pay-opt pay-instapay" onclick="selectPay('instapay')"><i class="fas fa-mobile-alt"></i> إنستا باي</div>
+            <div class="pay-opt pay-cash" onclick="selectPay('cash')">💵 كاش عند الاستلام</div>
+            <div class="pay-opt pay-instapay" onclick="selectPay('instapay')">📱 إنستا باي</div>
             <button onclick="closeModal('paymentModal')" style="margin-top:15px; background:#eee; border:none; padding:10px; width:100%; border-radius:30px;">إلغاء</button>
         </div>
     </div>
 
-    <!-- مودال رفع الإثبات -->
     <div class="modal" id="receiptModal">
         <div class="modal-box">
             <h3>إثبات التحويل</h3>
@@ -371,40 +330,37 @@
         </div>
     </div>
 
-    <!-- مودال المعاينة -->
     <div class="modal" id="inspectModal">
         <div class="modal-box">
-            <h3><i class="fas fa-home"></i> طلب معاينة مجانية</h3>
-            <input type="text" id="inspectName" placeholder="الاسم الكامل">
+            <h3>طلب معاينة مجانية</h3>
+            <input type="text" id="inspectName" placeholder="الاسم">
             <input type="text" id="inspectPhone" placeholder="رقم التليفون">
-            <input type="text" id="inspectAddress" placeholder="العنوان بالكامل">
-            <button onclick="sendInspect()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px;">إرسال الطلب</button>
+            <input type="text" id="inspectAddress" placeholder="العنوان">
+            <button onclick="sendInspect()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px;">إرسال</button>
             <button onclick="closeModal('inspectModal')" style="margin-top:10px; background:#eee; border:none; padding:10px; width:100%; border-radius:30px;">إلغاء</button>
         </div>
     </div>
 
-    <!-- مودال العقد -->
     <div class="modal" id="contractModal">
         <div class="modal-box">
-            <h3><i class="fas fa-file-contract"></i> نموذج عقد الاتفاق</h3>
-            <p style="color:#666; font-size:0.8rem; margin-bottom:10px;">عقد اتفاق بين العميل والمصنع يتم التوقيع عليه قبل البدء في التصنيع</p>
+            <h3>عقد الاتفاق</h3>
             <input type="text" id="contractName" placeholder="اسم العميل">
             <input type="text" id="contractPhone" placeholder="رقم التليفون">
             <input type="text" id="contractProduct" placeholder="نوع المطبخ">
-            <input type="text" id="contractPrice" placeholder="إجمالي المبلغ">
-            <textarea id="contractNotes" placeholder="أي ملاحظات أو تفاصيل إضافية" rows="3"></textarea>
-            <button onclick="makeContract()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px;">إنشاء العقد وإرساله</button>
+            <textarea id="contractNotes" placeholder="أي تفاصيل إضافية" rows="2"></textarea>
+            <button onclick="makeContract()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px;">إنشاء العقد</button>
             <button onclick="closeModal('contractModal')" style="margin-top:10px; background:#eee; border:none; padding:10px; width:100%; border-radius:30px;">إلغاء</button>
         </div>
     </div>
 
-    <!-- لوحة التحكم -->
     <div class="modal" id="adminPanel">
         <div class="modal-box" style="width:500px;">
-            <h3><i class="fas fa-crown"></i> لوحة تحكم ضجه</h3>
-            <div style="background:#f0f0f0; padding:12px; margin:10px 0; text-align:center; border-radius:12px;"><span id="statVisitors" style="font-size:1.8rem; font-weight:900; color:var(--gold);">0</span><br>زائر فريد للموقع</div>
-            <button onclick="showProductsManager()" style="background:var(--gold); border:none; padding:10px; width:100%; border-radius:30px; margin:5px 0;"><i class="fas fa-boxes"></i> إدارة المنتجات</button>
-            <button onclick="showOrdersList()" style="background:var(--dark); color:white; border:none; padding:10px; width:100%; border-radius:30px; margin:5px 0;"><i class="fas fa-list"></i> الطلبات</button>
+            <h3>🔐 لوحة تحكم ضجه</h3>
+            <div style="background:#f0f0f0; padding:12px; border-radius:12px; margin:10px 0; text-align:center;">
+                <span id="statVisitors" style="font-size:1.8rem; font-weight:900; color:var(--gold);">0</span><br>زائر فريد
+            </div>
+            <button onclick="showProductsManager()" style="background:var(--gold); border:none; padding:10px; width:100%; border-radius:30px; margin:5px 0;">📦 إدارة المنتجات</button>
+            <button onclick="showOrdersList()" style="background:var(--dark); color:white; border:none; padding:10px; width:100%; border-radius:30px; margin:5px 0;">📋 الطلبات</button>
             <div id="adminContent" style="margin-top:15px;"></div>
             <button onclick="closeModal('adminPanel')" style="background:#eee; border:none; padding:8px; width:100%; border-radius:30px; margin-top:10px;">إغلاق</button>
         </div>
@@ -414,27 +370,52 @@
 
     <footer>
         <p>© 2026 ضجه - جميع الحقوق محفوظة</p>
-        <p style="margin-top:8px;">تحت إشراف المهندس أحمد السيد والمهندس ياسين علاء</p>
-        <p style="font-size:0.8rem; margin-top:5px;">توصيل لجميع المحافظات - فريق تركيب خبراء - ضمان 5 سنوات ضد عيوب الصناعة</p>
+        <p>تحت إشراف المهندس أحمد السيد والمهندس ياسين علاء</p>
     </footer>
 
     <script>
-        // Firebase
+        // ========== الضغطات السرية ==========
+        let clickCount = 0;
+        let clickTimer = null;
+        
+        const secretElement = document.getElementById('secretLogo');
+        
+        function triggerAdmin() {
+            const pass = prompt("🔐 كلمة السر:");
+            if(pass === "13579") {
+                document.getElementById('adminPanel').classList.add('active');
+                updateStats();
+                showProductsManager();
+            } else if(pass !== null) {
+                alert("❌ كلمة سر خاطئة");
+            }
+        }
+        
+        secretElement.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clickCount++;
+            
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => {
+                if(clickCount >= 3) {
+                    triggerAdmin();
+                }
+                clickCount = 0;
+            }, 500);
+        });
+        
+        // ========== باقي الكود ==========
+        
         const firebaseConfig = { databaseURL: "https://ded-el-kasr-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // إحصائيات الزوار
         let vid = localStorage.getItem('vid');
         if(!vid) { vid = Date.now()+'-'+Math.random(); localStorage.setItem('vid',vid); db.ref('stats/visitors').transaction(v=>(v||0)+1); }
-        db.ref('stats/active').transaction(a=>(a||0)+1);
-        window.addEventListener('beforeunload', ()=> db.ref('stats/active').transaction(a=>Math.max(0,(a||1)-1)));
 
-        // متغيرات السلة
         let cart = [];
-        let tempOrderData = null;
+        let tempOrder = null;
 
-        // عرض المنتجات
         function loadProducts() {
             db.ref('products').once('value').then(snap => {
                 const grid = document.getElementById('productGrid');
@@ -449,8 +430,8 @@
                                 <h4>${p.name}</h4>
                                 <div class="price">${p.price} جنيه</div>
                                 <div class="card-buttons">
-                                    <button class="cart-btn" onclick="addToCart('${p.name}', ${p.price})"><i class="fas fa-cart-plus"></i> سلة</button>
-                                    <button class="buy-btn" onclick="buyNow('${p.name}', ${p.price})"><i class="fab fa-whatsapp"></i> شراء</button>
+                                    <button class="cart-btn" onclick="addToCart('${p.name}', ${p.price})">➕ سلة</button>
+                                    <button class="buy-btn" onclick="buyNow('${p.name}', ${p.price})">🛒 شراء</button>
                                 </div>
                             </div>
                         </div>
@@ -459,14 +440,13 @@
             });
         }
 
-        // السلة
         function addToCart(name, price) {
             cart.push({ name, price });
             updateCartUI();
             alert(`✅ تم إضافة ${name} إلى السلة`);
         }
         function removeFromCart(idx) {
-            cart.splice(idx, 1);
+            cart.splice(idx,1);
             updateCartUI();
         }
         function updateCartUI() {
@@ -475,18 +455,18 @@
             const badge = document.getElementById('cartCount');
             let total = 0;
             container.innerHTML = '';
-            cart.forEach((item, idx) => {
+            cart.forEach((item,idx) => {
                 total += item.price;
-                container.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #eee;">
+                container.innerHTML += `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #eee;">
                     <span>${item.name}</span>
-                    <span>${item.price} ج <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:red; cursor:pointer;"><i class="fas fa-trash"></i></button></span>
+                    <span>${item.price} ج <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:red;">🗑️</button></span>
                 </div>`;
             });
             totalSpan.innerText = `الإجمالي: ${total} جنيه`;
             badge.innerText = cart.length;
         }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-        function showPayment() { if(cart.length === 0) { alert("السلة فارغة"); return; } document.getElementById('paymentModal').classList.add('active'); }
+        function showPayment() { if(cart.length===0){ alert("السلة فارغة"); return; } document.getElementById('paymentModal').classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
         
         function selectPay(type) {
@@ -494,7 +474,6 @@
             if(type === 'cash') cashOrder();
             else requestReceipt();
         }
-        
         function cashOrder() {
             const name = prompt("اسمك الكامل:");
             if(!name) return;
@@ -502,107 +481,69 @@
             if(!phone) return;
             const order = { id:Date.now(), customer:name, phone, items:[...cart], total:cart.reduce((s,i)=>s+i.price,0), payment:'كاش', status:'جديد', date:new Date().toLocaleString('ar-EG') };
             db.ref('orders').push(order).then(() => {
-                alert("✅ تم استلام طلبك - سيتم التواصل معك لتأكيد التفاصيل");
-                window.open(`https://wa.me/201144265938?text=🛍️ طلب جديد (كاش) من ${order.customer} - ${order.phone} - ${order.total} ج`, '_blank');
+                alert("✅ تم استلام طلبك");
+                window.open(`https://wa.me/201144265938?text=🛍️ طلب جديد من ${order.customer} - ${order.phone} - ${order.total} ج`, '_blank');
                 cart = []; updateCartUI(); toggleSidebar();
             });
         }
-        
         function requestReceipt() {
             const name = prompt("اسمك الكامل:");
             if(!name) return;
             const phone = prompt("رقم هاتفك:");
             if(!phone) return;
-            tempOrderData = { name, phone, items:[...cart], total:cart.reduce((s,i)=>s+i.price,0) };
+            tempOrder = { name, phone, items:[...cart], total:cart.reduce((s,i)=>s+i.price,0) };
             document.getElementById('receiptModal').classList.add('active');
         }
-        
         function sendReceipt() {
             const file = document.getElementById('receiptFile').files[0];
-            if(!file) { alert("برجاء رفع صورة إثبات التحويل"); return; }
+            if(!file) { alert("ارفع صورة الإثبات"); return; }
             const reader = new FileReader();
             reader.onload = e => {
-                const order = { id:Date.now(), customer:tempOrderData.name, phone:tempOrderData.phone, items:tempOrderData.items, total:tempOrderData.total, payment:'إنستا باي', receipt:e.target.result, status='جديد', date:new Date().toLocaleString('ar-EG') };
+                const order = { id:Date.now(), customer:tempOrder.name, phone:tempOrder.phone, items:tempOrder.items, total:tempOrder.total, payment:'إنستا باي', receipt:e.target.result, status:'جديد', date:new Date().toLocaleString('ar-EG') };
                 db.ref('orders').push(order).then(() => {
-                    alert("✅ تم استلام طلبك وإثبات التحويل - سيتم التواصل معك لتأكيد التفاصيل");
-                    window.open(`https://wa.me/201144265938?text=🛍️ طلب جديد (إنستا باي) من ${order.customer} - ${order.phone} - ${order.total} ج`, '_blank');
+                    alert("✅ تم استلام طلبك");
+                    window.open(`https://wa.me/201144265938?text=🛍️ طلب إنستا باي من ${order.customer} - ${order.phone} - ${order.total} ج`, '_blank');
                     cart = []; updateCartUI(); toggleSidebar(); closeModal('receiptModal');
                 });
             };
             reader.readAsDataURL(file);
         }
-        
-        function buyNow(name, price) {
-            addToCart(name, price);
-            showPayment();
-        }
+        function buyNow(name,price) { addToCart(name,price); showPayment(); }
 
-        // المعاينة
         function openInspect() { document.getElementById('inspectModal').classList.add('active'); }
         function sendInspect() {
             const name = document.getElementById('inspectName').value;
             const phone = document.getElementById('inspectPhone').value;
-            if(!name || !phone) return alert("برجاء إدخال الاسم ورقم التليفون");
+            if(!name || !phone) return alert("ادخل الاسم والرقم");
             db.ref('inspections').push({ name, phone, address:document.getElementById('inspectAddress').value, date:new Date().toLocaleString('ar-EG') }).then(() => {
-                alert("✅ تم طلب المعاينة المجانية - سيتم التواصل معكم قريباً");
+                alert("✅ تم طلب المعاينة");
                 closeModal('inspectModal');
-                window.open(`https://wa.me/201144265938?text=🏠 طلب معاينة مجانية من ${name} - ${phone}`, '_blank');
-                document.getElementById('inspectName').value = '';
-                document.getElementById('inspectPhone').value = '';
-                document.getElementById('inspectAddress').value = '';
+                window.open(`https://wa.me/201144265938?text=🏠 معاينة من ${name} - ${phone}`, '_blank');
             });
         }
 
-        // العقد
         function openContract() { document.getElementById('contractModal').classList.add('active'); }
         function makeContract() {
             const name = document.getElementById('contractName').value;
             const phone = document.getElementById('contractPhone').value;
-            if(!name || !phone) return alert("برجاء إدخال بيانات العميل");
-            const contract = `
-📄 عقد اتفاق - شركة ضجه للمطابخ
-━━━━━━━━━━━━━━━━━━━━━━━
-العميل: ${name}
-رقم الهاتف: ${phone}
-نوع المطبخ: ${document.getElementById('contractProduct').value}
-إجمالي المبلغ: ${document.getElementById('contractPrice').value || 'يتم الاتفاق عليه'}
-الملاحظات: ${document.getElementById('contractNotes').value || 'لا يوجد'}
-━━━━━━━━━━━━━━━━━━━━━━━
-الضمان: 5 سنوات ضد عيوب الصناعة
-التوصيل والتركيب: من عربيات المصنع وفريق خبراء
-التسليم: المطبخ راكب على الحائط جاهز للاستخدام
-━━━━━━━━━━━━━━━━━━━━━━━
-هذا العقد موقع من الطرفين:
-توقيع العميل: ___________
-توقيع المصنع: ___________
-تاريخ العقد: ${new Date().toLocaleDateString('ar-EG')}
-            `;
+            if(!name || !phone) return alert("ادخل البيانات");
+            const contract = `📄 عقد اتفاق - ضجه\nالعميل: ${name}\nرقم: ${phone}\nالمطبخ: ${document.getElementById('contractProduct').value}\nالضمان: 5 سنوات\nالتسليم: مطبخ راكب على الحائط\nتاريخ: ${new Date().toLocaleDateString('ar-EG')}`;
             alert(contract);
             window.open(`https://wa.me/201144265938?text=${encodeURIComponent(contract)}`, '_blank');
             closeModal('contractModal');
         }
 
-        // لوحة التحكم
-        function openAdmin() {
-            if(prompt("كلمة السر:") === "13579") {
-                document.getElementById('adminPanel').classList.add('active');
-                updateStats();
-                showProductsManager();
-            }
-        }
-        function updateStats() {
-            db.ref('stats/visitors').once('value').then(s=>document.getElementById('statVisitors').innerText=s.val()||0);
-        }
+        function updateStats() { db.ref('stats/visitors').once('value').then(s=>document.getElementById('statVisitors').innerText=s.val()||0); }
         function showProductsManager() {
             db.ref('products').once('value').then(snap => {
-                let html = '<button onclick="showAddProduct()" style="background:var(--gold); border:none; padding:8px; width:100%; border-radius:30px; margin-bottom:10px;">+ إضافة منتج جديد</button>';
+                let html = '<button onclick="showAddProduct()" style="background:var(--gold); border:none; padding:8px; width:100%; border-radius:30px; margin-bottom:10px;">+ إضافة منتج</button>';
                 snap.forEach(child => {
                     const p = child.val();
-                    html += `<div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #ddd;">
-                        <div><strong>${p.name}</strong><br><span style="font-size:0.8rem;">${p.price} ج</span></div>
+                    html += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid #ddd;">
+                        <div><strong>${p.name}</strong><br>${p.price} ج</div>
                         <div>
-                            <button onclick="editProduct('${child.key}','${p.name}','${p.price}','${p.url}')" style="background:var(--gold); border:none; padding:5px 12px; border-radius:15px; margin:2px;"><i class="fas fa-edit"></i></button>
-                            <button onclick="deleteProduct('${child.key}')" style="background:red; color:white; border:none; padding:5px 12px; border-radius:15px;"><i class="fas fa-trash"></i></button>
+                            <button onclick="editProduct('${child.key}','${p.name}','${p.price}','${p.url}')" style="background:var(--gold); border:none; padding:5px 12px; border-radius:15px;">✏️</button>
+                            <button onclick="deleteProduct('${child.key}')" style="background:red; color:white; border:none; padding:5px 12px; border-radius:15px;">🗑️</button>
                         </div>
                     </div>`;
                 });
@@ -611,37 +552,33 @@
         }
         function showAddProduct() {
             document.getElementById('adminContent').innerHTML = `
-                <h4>إضافة منتج جديد</h4>
                 <input type="text" id="newUrl" placeholder="رابط الصورة">
                 <input type="text" id="newName" placeholder="اسم المنتج">
                 <input type="text" id="newPrice" placeholder="السعر">
-                <button onclick="addNewProduct()" style="background:var(--gold); border:none; padding:10px; width:100%; border-radius:30px;">نشر المنتج</button>
+                <button onclick="addNewProduct()" style="background:var(--gold); border:none; padding:10px; width:100%; border-radius:30px;">نشر</button>
                 <button onclick="showProductsManager()" style="background:#eee; border:none; padding:8px; width:100%; border-radius:30px; margin-top:5px;">رجوع</button>
             `;
         }
         function addNewProduct() {
-            const url = document.getElementById('newUrl')?.value;
-            const name = document.getElementById('newName')?.value;
-            if(!url || !name) return alert("رابط الصورة واسم المنتج مطلوبين");
-            db.ref('products').push({ url, name, price:document.getElementById('newPrice')?.value||"اتصل بنا" }).then(()=>{ alert("✅ تم إضافة المنتج"); loadProducts(); showProductsManager(); });
+            const url = document.getElementById('newUrl')?.value, name = document.getElementById('newName')?.value;
+            if(!url || !name) return alert("رابط الصورة والاسم مطلوبين");
+            db.ref('products').push({ url, name, price:document.getElementById('newPrice')?.value||"اتصل بنا" }).then(()=>{ alert("✅ تم"); loadProducts(); showProductsManager(); });
         }
-        function editProduct(id, oldName, oldPrice, oldUrl) {
+        function editProduct(id,oldName,oldPrice,oldUrl) {
             document.getElementById('adminContent').innerHTML = `
-                <h4>تعديل المنتج</h4>
                 <input type="text" id="editUrl" value="${oldUrl}">
                 <input type="text" id="editName" value="${oldName}">
                 <input type="text" id="editPrice" value="${oldPrice}">
-                <button onclick="updateProduct('${id}')" style="background:var(--gold); border:none; padding:10px; width:100%; border-radius:30px;">حفظ التعديلات</button>
+                <button onclick="updateProduct('${id}')" style="background:var(--gold); border:none; padding:10px; width:100%; border-radius:30px;">حفظ</button>
                 <button onclick="showProductsManager()" style="background:#eee; border:none; padding:8px; width:100%; border-radius:30px; margin-top:5px;">رجوع</button>
             `;
         }
         function updateProduct(id) {
-            const url = document.getElementById('editUrl')?.value;
-            const name = document.getElementById('editName')?.value;
-            if(!url || !name) return alert("رابط الصورة واسم المنتج مطلوبين");
-            db.ref(`products/${id}`).update({ url, name, price:document.getElementById('editPrice')?.value||"اتصل بنا" }).then(()=>{ alert("✅ تم التعديل"); loadProducts(); showProductsManager(); });
+            const url = document.getElementById('editUrl')?.value, name = document.getElementById('editName')?.value;
+            if(!url || !name) return alert("رابط الصورة والاسم مطلوبين");
+            db.ref(`products/${id}`).update({ url, name, price:document.getElementById('editPrice')?.value||"اتصل بنا" }).then(()=>{ alert("✅ تم"); loadProducts(); showProductsManager(); });
         }
-        function deleteProduct(id) { if(confirm("هل أنت متأكد من حذف هذا المنتج؟")) db.ref(`products/${id}`).remove().then(()=>{ alert("تم الحذف"); loadProducts(); showProductsManager(); }); }
+        function deleteProduct(id) { if(confirm("حذف؟")) db.ref(`products/${id}`).remove().then(()=>{ alert("تم"); loadProducts(); showProductsManager(); }); }
         function showOrdersList() {
             db.ref('orders').once('value').then(snap => {
                 let html = '<div style="max-height:300px; overflow-y:auto;">';
@@ -649,17 +586,17 @@
                     const o = child.val();
                     html += `<div style="border:1px solid #ddd; padding:10px; margin:8px 0; border-radius:10px;">
                         <strong>${o.customer}</strong> | ${o.phone}<br>
-                        💰 ${o.total} ج | 💳 ${o.payment}<br>
-                        📌 الحالة: ${o.status} | 🕐 ${o.date}
-                        <button onclick="updateOrderStatus('${child.key}')" style="background:var(--gold); border:none; padding:5px 12px; border-radius:15px; margin-top:5px;">تغيير الحالة</button>
+                        💰 ${o.total} ج | ${o.payment}<br>
+                        📌 ${o.status} | ${o.date}
+                        <button onclick="updateOrder('${child.key}')" style="background:var(--gold); border:none; padding:5px 10px; border-radius:15px;">تغيير</button>
                     </div>`;
                 });
                 html += '</div>';
                 document.getElementById('adminContent').innerHTML = html;
             });
         }
-        function updateOrderStatus(id) { const s=prompt("الحالة الجديدة (جديد/قيد التجهيز/تم التوصيل):"); if(s) db.ref(`orders/${id}`).update({ status:s }); }
-        
+        function updateOrder(id) { const s=prompt("الحالة الجديدة:"); if(s) db.ref(`orders/${id}`).update({ status:s }); }
+
         loadProducts();
     </script>
 </body>
