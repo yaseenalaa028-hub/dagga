@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>ضجه | مطابخ فاخرة - ضجه سيستيم</title>
-    <meta name="description" content="ضجه سيستيم - مطابخ فاخرة بخامات قوية، ضمان 5 سنوات ضد عيوب الصناعة">
     
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
@@ -29,7 +28,6 @@
         }
         body { background: var(--white); }
         
-        /* الهيدر */
         header {
             position: fixed;
             top: 0;
@@ -55,15 +53,11 @@
         .logo span { font-size: 1.4rem; font-weight: 900; pointer-events: none; }
         .nav-buttons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .fb-btn { background: var(--facebook); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
-        .fb-btn:hover { transform: scale(1.05); }
-        .inspect-btn, .whatsapp-btn { padding: 6px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; text-decoration: none; display: flex; align-items: center; gap: 6px; border: none; cursor: pointer; transition: 0.3s; }
-        .inspect-btn { background: var(--gold); color: #000; }
-        .inspect-btn:hover, .whatsapp-btn:hover { transform: scale(1.02); }
-        .whatsapp-btn { background: var(--whatsapp); color: white; }
+        .inspect-btn { background: var(--gold); color: #000; padding: 6px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .whatsapp-nav-btn { background: var(--whatsapp); color: white; padding: 6px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; text-decoration: none; display: flex; align-items: center; gap: 6px; }
         .cart-icon { position: relative; cursor: pointer; font-size: 1.4rem; color: var(--dark); }
         .cart-count { position: absolute; top: -8px; right: -12px; background: var(--gold); border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: 900; }
         
-        /* شريط الرول */
         .top-scroll {
             background: var(--dark);
             color: var(--gold);
@@ -88,7 +82,6 @@
             100% { transform: translateX(-50%); }
         }
         
-        /* الهيرو */
         .hero {
             margin-top: 110px;
             height: 70vh;
@@ -109,16 +102,13 @@
         .hero-content h1 span { color: var(--gold); }
         .hero-content p { font-size: 1rem; line-height: 1.7; }
         
-        /* المهندسين */
         .engineers {
             background: linear-gradient(135deg, var(--dark), #1a1a2e);
             color: white;
             text-align: center;
             padding: 25px;
         }
-        .engineers p { font-size: 1rem; }
         
-        /* المميزات */
         .features {
             padding: 50px 5%;
             display: grid;
@@ -133,19 +123,18 @@
             text-align: center;
             transition: 0.3s;
         }
-        .feature:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .feature:hover { transform: translateY(-5px); }
         .feature i { font-size: 2.2rem; color: var(--gold); margin-bottom: 12px; }
         .feature h3 { font-size: 1.3rem; margin-bottom: 8px; }
-        .feature p { color: #666; font-size: 0.9rem; }
+        .feature p { color: #666; }
         
-        /* الضمانات */
         .warranty {
             background: var(--dark);
             color: white;
             padding: 50px 5%;
             text-align: center;
         }
-        .warranty h2 { color: var(--gold); margin-bottom: 25px; font-size: 1.8rem; }
+        .warranty h2 { color: var(--gold); margin-bottom: 25px; }
         .warranty-box {
             background: rgba(255,255,255,0.08);
             padding: 30px;
@@ -154,8 +143,7 @@
             margin: 0 auto;
             text-align: right;
         }
-        .warranty-box p { margin: 15px 0; font-size: 1rem; }
-        .warranty-box i { color: var(--gold); margin-left: 10px; }
+        .warranty-box p { margin: 15px 0; }
         .contract-btn {
             background: var(--gold);
             color: var(--dark);
@@ -165,12 +153,8 @@
             font-weight: 900;
             margin-top: 25px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: 0.3s;
         }
-        .contract-btn:hover { transform: scale(1.02); }
         
-        /* المنتجات */
         .products {
             padding: 60px 5%;
         }
@@ -182,8 +166,11 @@
         }
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
+        }
+        @media (max-width: 700px) {
+            .product-grid { grid-template-columns: 1fr; }
         }
         .card {
             background: var(--white);
@@ -193,18 +180,98 @@
             border: 1px solid #eee;
             transition: 0.3s;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card:hover { transform: translateY(-5px); }
+        .card-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            cursor: pointer;
+        }
         .card-info { padding: 18px; }
         .card-info h4 { font-size: 1.2rem; margin-bottom: 5px; }
         .price { color: var(--gold); font-weight: 900; font-size: 1.2rem; margin: 10px 0; }
         .card-buttons { display: flex; gap: 10px; margin-top: 12px; }
-        .cart-btn, .buy-btn { flex: 1; padding: 8px; border-radius: 30px; font-weight: 700; cursor: pointer; border: none; transition: 0.2s; }
-        .cart-btn { background: #f0f0f0; }
-        .buy-btn { background: var(--gold); color: #000; }
-        .cart-btn:hover, .buy-btn:hover { opacity: 0.9; }
+        .cart-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .whatsapp-order-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            background: var(--whatsapp);
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
         
-        /* السلة الجانبية */
+        .toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: var(--dark);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 900;
+            z-index: 300;
+            animation: toastFade 2s ease;
+        }
+        @keyframes toastFade {
+            0% { opacity: 0; top: 60px; }
+            15% { opacity: 1; top: 80px; }
+            85% { opacity: 1; top: 80px; }
+            100% { opacity: 0; top: 60px; visibility: hidden; }
+        }
+        
+        .image-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 5000;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .image-modal.active { display: flex; }
+        .full-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        .close-img {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         .sidebar {
             position: fixed;
             top: 0;
@@ -223,7 +290,6 @@
         .cart-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
         .checkout-btn { width: 100%; padding: 12px; background: var(--gold); border: none; border-radius: 30px; font-weight: 900; cursor: pointer; margin-top: 15px; }
         
-        /* المودالات */
         .modal {
             display: none;
             position: fixed;
@@ -243,19 +309,38 @@
             max-height: 85%;
             overflow-y: auto;
         }
-        .modal-box h3 { margin-bottom: 15px; color: var(--gold); }
         .modal-box input, .modal-box select, .modal-box textarea {
             width: 100%;
             padding: 10px;
             margin: 8px 0;
             border-radius: 10px;
             border: 1px solid #ddd;
-            font-size: 0.95rem;
         }
-        .pay-opt { padding: 14px; margin: 10px 0; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 700; transition: 0.2s; }
+        .pay-opt { padding: 14px; margin: 10px 0; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 700; }
         .pay-cash { background: #f0f0f0; }
         .pay-instapay { background: #4B0082; color: white; }
-        .pay-opt:hover { opacity: 0.9; transform: scale(0.98); }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
         
         footer {
             background: var(--dark);
@@ -263,7 +348,6 @@
             padding: 35px 20px;
             text-align: center;
         }
-        footer p { margin: 5px 0; }
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -280,15 +364,6 @@
             z-index: 100;
             text-decoration: none;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: 0.3s;
-        }
-        .whatsapp-float:hover { transform: scale(1.05); }
-        
-        @media (max-width: 700px) {
-            .hero-content h1 { font-size: 1.6rem; }
-            .hero { background-attachment: scroll; height: 60vh; }
-            .sidebar { width: 100%; right: -100%; }
-            .features { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -302,7 +377,7 @@
         <div class="nav-buttons">
             <a href="https://www.facebook.com/profile.php?id=61573938724576" target="_blank" class="fb-btn"><i class="fab fa-facebook-f"></i></a>
             <button class="inspect-btn" onclick="openInspectModal()"><i class="fas fa-eye"></i> معاينة مجانية</button>
-            <a href="https://wa.me/201144265938" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
+            <a href="https://wa.me/201144265938" class="whatsapp-nav-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
             <div class="cart-icon" onclick="toggleCart()">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count" id="cartCount">0</span>
@@ -349,7 +424,11 @@
         <div class="product-grid" id="productGrid"></div>
     </section>
 
-    <!-- السلة الجانبية -->
+    <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+        <span class="close-img" onclick="closeImageModal()"><i class="fas fa-times"></i></span>
+        <img class="full-image" id="fullImage" src="">
+    </div>
+
     <div class="sidebar" id="cartSidebar">
         <div class="close-side" onclick="toggleCart()"><i class="fas fa-times"></i></div>
         <h3><i class="fas fa-shopping-cart"></i> سلة التسوق</h3>
@@ -358,28 +437,25 @@
         <button class="checkout-btn" onclick="showPaymentModal()"><i class="fas fa-credit-card"></i> إتمام الشراء</button>
     </div>
 
-    <!-- مودال الدفع -->
     <div class="modal" id="paymentModal">
         <div class="modal-box">
             <h3>اختر طريقة الدفع</h3>
             <div class="pay-opt pay-cash" onclick="selectPayment('cash')"><i class="fas fa-money-bill-wave"></i> كاش عند الاستلام</div>
-            <div class="pay-opt pay-instapay" onclick="selectPayment('instapay')"><i class="fas fa-mobile-alt"></i> إنستا باي (InstaPay)</div>
+            <div class="pay-opt pay-instapay" onclick="selectPayment('instapay')"><i class="fas fa-mobile-alt"></i> إنستا باي</div>
             <button onclick="closeModal('paymentModal')" style="margin-top:15px; background:#eee; border:none; padding:10px; width:100%; border-radius:30px;">إلغاء</button>
         </div>
     </div>
 
-    <!-- مودال رفع إثبات التحويل -->
     <div class="modal" id="receiptModal">
         <div class="modal-box">
             <h3><i class="fas fa-upload"></i> إثبات التحويل</h3>
-            <p>رقم التحويل: <strong style="color:var(--gold); font-size:1.2rem;">01144265938</strong></p>
+            <p>رقم التحويل: <strong style="color:var(--gold);">01144265938</strong></p>
             <input type="file" id="receiptFile" accept="image/*">
             <button onclick="uploadReceipt()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px; margin-top:10px;">إرسال الإثبات</button>
             <button onclick="closeModal('receiptModal')" style="margin-top:10px; background:#eee; border:none; padding:10px; width:100%; border-radius:30px;">إلغاء</button>
         </div>
     </div>
 
-    <!-- مودال المعاينة المجانية -->
     <div class="modal" id="inspectModal">
         <div class="modal-box">
             <h3><i class="fas fa-home"></i> طلب معاينة مجانية</h3>
@@ -395,7 +471,6 @@
         </div>
     </div>
 
-    <!-- مودال العقد -->
     <div class="modal" id="contractModal">
         <div class="modal-box">
             <h3><i class="fas fa-file-contract"></i> عقد الاتفاق</h3>
@@ -409,13 +484,26 @@
         </div>
     </div>
 
-    <!-- لوحة التحكم (مخفية) -->
     <div class="modal" id="adminPanel">
-        <div class="modal-box" style="width:520px;">
+        <div class="modal-box" style="width:550px;">
             <h3><i class="fas fa-crown"></i> لوحة تحكم ضجه</h3>
-            <div style="background:#f0f0f0; padding:15px; border-radius:12px; margin:15px 0; text-align:center;">
-                <span id="statVisitors" style="font-size:2rem; font-weight:900; color:var(--gold);">0</span><br>زائر فريد للموقع
+            
+            <!-- كروت الإحصائيات الجديدة -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-number" id="statVisitors">0</div>
+                    <div class="stat-label">👥 زائر فريد</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statInspections">0</div>
+                    <div class="stat-label">🏠 طلبات معاينة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statPageViews">0</div>
+                    <div class="stat-label">👁️ إجمالي مشاهدات</div>
+                </div>
             </div>
+            
             <button onclick="showProductsManager()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px; margin:5px 0; font-weight:700; cursor:pointer;"><i class="fas fa-boxes"></i> إدارة المنتجات</button>
             <button onclick="showOrdersManager()" style="background:var(--dark); color:white; border:none; padding:12px; width:100%; border-radius:30px; margin:5px 0; font-weight:700; cursor:pointer;"><i class="fas fa-list"></i> عرض الطلبات</button>
             <div id="adminContent" style="margin-top:15px;"></div>
@@ -432,25 +520,45 @@
     </footer>
 
     <script>
-        // ========== Firebase ==========
+        // Firebase
         const firebaseConfig = { databaseURL: "https://ded-el-kasr-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // ========== إحصائيات الزوار ==========
+        // ========== إحصائيات الموقع ==========
+        // 1. الزوار الفريدين
         let visitorId = localStorage.getItem('visitorId');
         if(!visitorId) {
             visitorId = Date.now() + '-' + Math.random();
             localStorage.setItem('visitorId', visitorId);
             db.ref('stats/visitors').transaction(v => (v || 0) + 1);
         }
+        
+        // 2. إجمالي مشاهدات الصفحة (كل مرة تفتح الصفحة تزيد)
+        db.ref('stats/pageViews').transaction(pv => (pv || 0) + 1);
+        
+        // 3. عدد المعاينات (يتم تحديثه من قاعدة البيانات)
 
         // ========== متغيرات السلة ==========
         let cart = [];
         let tempOrder = null;
-        let selectedPayment = null;
 
-        // ========== عرض المنتجات ==========
+        function showToast(message) {
+            let toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        }
+
+        function openImageModal(src) {
+            document.getElementById('fullImage').src = src;
+            document.getElementById('imageModal').classList.add('active');
+        }
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+
         function loadProducts() {
             db.ref('products').once('value').then(snap => {
                 const grid = document.getElementById('productGrid');
@@ -463,13 +571,13 @@
                     const p = child.val();
                     grid.innerHTML += `
                         <div class="card">
-                            <img src="${p.url}" alt="${p.name}" loading="lazy">
+                            <img src="${p.url}" alt="${p.name}" class="card-img" onclick="openImageModal('${p.url}')">
                             <div class="card-info">
                                 <h4>${p.name}</h4>
                                 <div class="price">${p.price} جنيه</div>
                                 <div class="card-buttons">
                                     <button class="cart-btn" onclick="addToCart('${p.name}', ${p.price})"><i class="fas fa-cart-plus"></i> سلة</button>
-                                    <button class="buy-btn" onclick="buyNow('${p.name}', ${p.price})"><i class="fab fa-whatsapp"></i> شراء</button>
+                                    <a href="https://wa.me/201144265938?text=السلام عليكم مهندس، أنا مهتم بـ ${p.name}" target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> تواصل واتساب</a>
                                 </div>
                             </div>
                         </div>
@@ -478,11 +586,10 @@
             });
         }
 
-        // ========== إدارة السلة ==========
         function addToCart(name, price) {
             cart.push({ name, price });
             updateCartUI();
-            alert(`✅ تم إضافة ${name} إلى السلة`);
+            showToast(`✅ تم إضافة ${name} إلى السلة`);
         }
 
         function removeFromCart(index) {
@@ -522,7 +629,6 @@
         }
 
         function selectPayment(type) {
-            selectedPayment = type;
             closeModal('paymentModal');
             if(type === 'cash') {
                 processCashOrder();
@@ -531,7 +637,6 @@
             }
         }
 
-        // ========== طلب كاش ==========
         function processCashOrder() {
             const customerName = prompt("الاسم بالكامل:");
             if(!customerName) return;
@@ -559,7 +664,6 @@
             });
         }
 
-        // ========== طلب إنستا باي ==========
         function requestInstaPayReceipt() {
             const customerName = prompt("الاسم بالكامل:");
             if(!customerName) return;
@@ -610,12 +714,6 @@
             reader.readAsDataURL(file);
         }
 
-        function buyNow(name, price) {
-            addToCart(name, price);
-            showPaymentModal();
-        }
-
-        // ========== المعاينة المجانية ==========
         function openInspectModal() {
             document.getElementById('inspectModal').classList.add('active');
         }
@@ -644,10 +742,11 @@
                 document.getElementById('inspectName').value = '';
                 document.getElementById('inspectPhone').value = '';
                 document.getElementById('inspectAddress').value = '';
+                // تحديث عدد المعاينات
+                updateStats();
             });
         }
 
-        // ========== عقد الاتفاق ==========
         function openContractModal() {
             document.getElementById('contractModal').classList.add('active');
         }
@@ -689,12 +788,11 @@
             document.getElementById('contractNotes').value = '';
         }
 
-        // ========== إغلاق المودالات ==========
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // ========== لوحة التحكم (مخفية - 3 ضغطات على الشعار) ==========
+        // ========== لوحة التحكم ==========
         let clickCount = 0;
         let clickTimer = null;
         
@@ -717,8 +815,19 @@
         });
 
         function updateStats() {
+            // عدد الزوار الفريدين
             db.ref('stats/visitors').once('value').then(s => {
                 document.getElementById('statVisitors').innerText = s.val() || 0;
+            });
+            // عدد المعاينات
+            db.ref('inspections').once('value').then(s => {
+                let count = 0;
+                s.forEach(() => count++);
+                document.getElementById('statInspections').innerText = count;
+            });
+            // إجمالي مشاهدات الصفحة
+            db.ref('stats/pageViews').once('value').then(s => {
+                document.getElementById('statPageViews').innerText = s.val() || 0;
             });
         }
 
@@ -853,8 +962,8 @@
             }
         }
 
-        // ========== تحميل المنتجات عند فتح الصفحة ==========
         loadProducts();
+        updateStats();
     </script>
 </body>
 </html>
