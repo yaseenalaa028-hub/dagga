@@ -25,6 +25,7 @@
             --light: #f5f5f5;
             --whatsapp: #25d366;
             --facebook: #1877F2;
+            --discount-red: #e74c3c;
         }
         body { background: var(--white); }
         
@@ -179,17 +180,58 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             border: 1px solid #eee;
             transition: 0.3s;
+            position: relative;
         }
         .card:hover { transform: translateY(-5px); }
+        
+        /* شريط التخفيض الأحمر */
+        .discount-ribbon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--discount-red);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 25px;
+            font-weight: 900;
+            font-size: 0.8rem;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
         .card-img {
             width: 100%;
             height: 250px;
             object-fit: cover;
             cursor: pointer;
+            loading: lazy;
         }
         .card-info { padding: 18px; }
         .card-info h4 { font-size: 1.2rem; margin-bottom: 5px; }
-        .price { color: var(--gold); font-weight: 900; font-size: 1.2rem; margin: 10px 0; }
+        .price {
+            color: var(--gold);
+            font-weight: 900;
+            font-size: 1.1rem;
+            margin: 8px 0;
+        }
+        .price-per-meter {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: -5px;
+            margin-bottom: 8px;
+        }
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+            margin-left: 8px;
+        }
         .card-buttons { display: flex; gap: 10px; margin-top: 12px; }
         .cart-btn {
             flex: 1;
@@ -304,7 +346,7 @@
             background: var(--white);
             padding: 25px;
             border-radius: 20px;
-            width: 450px;
+            width: 500px;
             max-width: 90%;
             max-height: 85%;
             overflow-y: auto;
@@ -375,7 +417,7 @@
             <span>ضجه</span>
         </div>
         <div class="nav-buttons">
-            <a href="https://www.facebook.com/profile.php?id=61573938724576" target="_blank" class="fb-btn"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.facebook.com/share/18AaN7cHcm/" target="_blank" class="fb-btn"><i class="fab fa-facebook-f"></i></a>
             <button class="inspect-btn" onclick="openInspectModal()"><i class="fas fa-eye"></i> معاينة مجانية</button>
             <a href="https://wa.me/201144265938" class="whatsapp-nav-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
             <div class="cart-icon" onclick="toggleCart()">
@@ -488,7 +530,6 @@
         <div class="modal-box" style="width:550px;">
             <h3><i class="fas fa-crown"></i> لوحة تحكم ضجه</h3>
             
-            <!-- كروت الإحصائيات الجديدة -->
             <div class="stats-cards">
                 <div class="stat-card">
                     <div class="stat-number" id="statVisitors">0</div>
@@ -520,26 +561,18 @@
     </footer>
 
     <script>
-        // Firebase
         const firebaseConfig = { databaseURL: "https://ded-el-kasr-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // ========== إحصائيات الموقع ==========
-        // 1. الزوار الفريدين
         let visitorId = localStorage.getItem('visitorId');
         if(!visitorId) {
             visitorId = Date.now() + '-' + Math.random();
             localStorage.setItem('visitorId', visitorId);
             db.ref('stats/visitors').transaction(v => (v || 0) + 1);
         }
-        
-        // 2. إجمالي مشاهدات الصفحة (كل مرة تفتح الصفحة تزيد)
         db.ref('stats/pageViews').transaction(pv => (pv || 0) + 1);
-        
-        // 3. عدد المعاينات (يتم تحديثه من قاعدة البيانات)
 
-        // ========== متغيرات السلة ==========
         let cart = [];
         let tempOrder = null;
 
@@ -559,6 +592,19 @@
             document.getElementById('imageModal').classList.remove('active');
         }
 
+        function formatPrice(price, discount) {
+            let original = parseInt(price);
+            let afterDiscount = original;
+            let discountText = '';
+            
+            if(discount && discount > 0) {
+                afterDiscount = original - (original * discount / 100);
+                discountText = `<div class="discount-ribbon">🔥 خصم ${discount}%</div>`;
+            }
+            
+            return { original, afterDiscount, discountText };
+        }
+
         function loadProducts() {
             db.ref('products').once('value').then(snap => {
                 const grid = document.getElementById('productGrid');
@@ -569,14 +615,33 @@
                 }
                 snap.forEach(child => {
                     const p = child.val();
+                    const { original, afterDiscount, discountText } = formatPrice(p.price, p.discount);
+                    
+                    let priceHTML = '';
+                    if(p.discount && p.discount > 0) {
+                        priceHTML = `
+                            <div class="price">
+                                <span class="old-price">${original} جنيه</span>
+                                <span>${afterDiscount} جنيه</span>
+                            </div>
+                            <div class="price-per-meter">⭐ السعر: ${afterDiscount} جنيه للمتر المربع</div>
+                        `;
+                    } else {
+                        priceHTML = `
+                            <div class="price">${original} جنيه</div>
+                            <div class="price-per-meter">⭐ السعر: ${original} جنيه للمتر المربع</div>
+                        `;
+                    }
+                    
                     grid.innerHTML += `
                         <div class="card">
-                            <img src="${p.url}" alt="${p.name}" class="card-img" onclick="openImageModal('${p.url}')">
+                            ${discountText}
+                            <img src="${p.url}" alt="${p.name}" class="card-img" loading="lazy" onclick="openImageModal('${p.url}')">
                             <div class="card-info">
                                 <h4>${p.name}</h4>
-                                <div class="price">${p.price} جنيه</div>
+                                ${priceHTML}
                                 <div class="card-buttons">
-                                    <button class="cart-btn" onclick="addToCart('${p.name}', ${p.price})"><i class="fas fa-cart-plus"></i> سلة</button>
+                                    <button class="cart-btn" onclick="addToCart('${p.name}', ${afterDiscount})"><i class="fas fa-cart-plus"></i> سلة</button>
                                     <a href="https://wa.me/201144265938?text=السلام عليكم مهندس، أنا مهتم بـ ${p.name}" target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> تواصل واتساب</a>
                                 </div>
                             </div>
@@ -742,7 +807,6 @@
                 document.getElementById('inspectName').value = '';
                 document.getElementById('inspectPhone').value = '';
                 document.getElementById('inspectAddress').value = '';
-                // تحديث عدد المعاينات
                 updateStats();
             });
         }
@@ -792,7 +856,7 @@
             document.getElementById(modalId).classList.remove('active');
         }
 
-        // ========== لوحة التحكم ==========
+        // لوحة التحكم
         let clickCount = 0;
         let clickTimer = null;
         
@@ -815,17 +879,14 @@
         });
 
         function updateStats() {
-            // عدد الزوار الفريدين
             db.ref('stats/visitors').once('value').then(s => {
                 document.getElementById('statVisitors').innerText = s.val() || 0;
             });
-            // عدد المعاينات
             db.ref('inspections').once('value').then(s => {
                 let count = 0;
                 s.forEach(() => count++);
                 document.getElementById('statInspections').innerText = count;
             });
-            // إجمالي مشاهدات الصفحة
             db.ref('stats/pageViews').once('value').then(s => {
                 document.getElementById('statPageViews').innerText = s.val() || 0;
             });
@@ -837,14 +898,16 @@
                 html += '<div style="max-height:300px; overflow-y:auto;">';
                 snap.forEach(child => {
                     const p = child.val();
+                    const discountBadge = p.discount ? `خصم ${p.discount}%` : 'لا يوجد خصم';
                     html += `
                         <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid #ddd;">
                             <div>
                                 <strong>${p.name}</strong><br>
                                 <span style="color:var(--gold);">${p.price} جنيه</span>
+                                ${p.discount ? `<span style="color:red; font-size:0.8rem;"> | 🔥 خصم ${p.discount}%</span>` : ''}
                             </div>
                             <div>
-                                <button onclick="editProduct('${child.key}', '${p.name}', '${p.price}', '${p.url}')" style="background:var(--gold); border:none; padding:5px 12px; border-radius:15px; margin:2px; cursor:pointer;"><i class="fas fa-edit"></i></button>
+                                <button onclick="editProduct('${child.key}', '${p.name}', '${p.price}', '${p.url}', '${p.discount || 0}')" style="background:var(--gold); border:none; padding:5px 12px; border-radius:15px; margin:2px; cursor:pointer;"><i class="fas fa-edit"></i></button>
                                 <button onclick="deleteProduct('${child.key}')" style="background:red; color:white; border:none; padding:5px 12px; border-radius:15px; margin:2px; cursor:pointer;"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
@@ -859,8 +922,10 @@
             document.getElementById('adminContent').innerHTML = `
                 <h4 style="margin-bottom:10px;">إضافة منتج جديد</h4>
                 <input type="text" id="newUrl" placeholder="رابط الصورة" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <input type="text" id="newName" placeholder="اسم المنتج" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <input type="text" id="newPrice" placeholder="السعر (رقم فقط)" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
+                <input type="text" id="newName" placeholder="اسم المنتج (مثال: المنيوم فرنساوي - رخام جلالة)" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
+                <input type="number" id="newPrice" placeholder="السعر الأساسي (للمتر المربع)" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
+                <input type="number" id="newDiscount" placeholder="نسبة الخصم (مثال: 20 يعني 20%)" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
+                <small style="color:#666;">💡 اترك الخصم 0 إذا لا يوجد تخفيض</small>
                 <button onclick="addNewProduct()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px; margin-top:10px; font-weight:700; cursor:pointer;">نشر المنتج</button>
                 <button onclick="showProductsManager()" style="background:#eee; border:none; padding:10px; width:100%; border-radius:30px; margin-top:8px; cursor:pointer;">رجوع</button>
             `;
@@ -870,16 +935,18 @@
             const url = document.getElementById('newUrl')?.value.trim();
             const name = document.getElementById('newName')?.value.trim();
             const price = document.getElementById('newPrice')?.value.trim();
+            const discount = document.getElementById('newDiscount')?.value.trim();
             
-            if(!url || !name) {
-                alert("رابط الصورة واسم المنتج مطلوبين");
+            if(!url || !name || !price) {
+                alert("رابط الصورة واسم المنتج والسعر مطلوبين");
                 return;
             }
             
             db.ref('products').push({
                 url: url,
                 name: name,
-                price: price || "اتصل بنا"
+                price: price,
+                discount: discount ? parseInt(discount) : 0
             }).then(() => {
                 alert("✅ تم إضافة المنتج بنجاح");
                 loadProducts();
@@ -887,12 +954,13 @@
             });
         }
 
-        function editProduct(id, oldName, oldPrice, oldUrl) {
+        function editProduct(id, oldName, oldPrice, oldUrl, oldDiscount) {
             document.getElementById('adminContent').innerHTML = `
                 <h4 style="margin-bottom:10px;">تعديل المنتج</h4>
                 <input type="text" id="editUrl" value="${oldUrl}" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
                 <input type="text" id="editName" value="${oldName}" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <input type="text" id="editPrice" value="${oldPrice}" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
+                <input type="number" id="editPrice" value="${oldPrice}" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
+                <input type="number" id="editDiscount" value="${oldDiscount}" placeholder="نسبة الخصم" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
                 <button onclick="updateProduct('${id}')" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px; margin-top:10px; font-weight:700; cursor:pointer;">حفظ التعديلات</button>
                 <button onclick="showProductsManager()" style="background:#eee; border:none; padding:10px; width:100%; border-radius:30px; margin-top:8px; cursor:pointer;">رجوع</button>
             `;
@@ -902,16 +970,18 @@
             const url = document.getElementById('editUrl')?.value.trim();
             const name = document.getElementById('editName')?.value.trim();
             const price = document.getElementById('editPrice')?.value.trim();
+            const discount = document.getElementById('editDiscount')?.value.trim();
             
-            if(!url || !name) {
-                alert("رابط الصورة واسم المنتج مطلوبين");
+            if(!url || !name || !price) {
+                alert("رابط الصورة واسم المنتج والسعر مطلوبين");
                 return;
             }
             
             db.ref(`products/${id}`).update({
                 url: url,
                 name: name,
-                price: price || "اتصل بنا"
+                price: price,
+                discount: discount ? parseInt(discount) : 0
             }).then(() => {
                 alert("✅ تم تعديل المنتج بنجاح");
                 loadProducts();
