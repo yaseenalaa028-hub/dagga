@@ -11,83 +11,79 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
         :root {
             --gold: #D4AF37;
+            --gold-dark: #B4941A;
             --dark: #0a0a1a;
+            --dark-light: #1a1a2e;
             --white: #ffffff;
-            --light: #f5f5f5;
+            --light: #f8f9fa;
             --whatsapp: #25d366;
             --facebook: #1877F2;
             --discount-red: #e74c3c;
         }
-        body { background: var(--white); }
+        body { background: var(--light); }
         
         header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: var(--white);
-            padding: 8px 5%;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 200;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.08);
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-        .logo img { height: 42px; pointer-events: none; }
-        .logo span { font-size: 1.4rem; font-weight: 900; pointer-events: none; }
-        .nav-buttons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-        .fb-btn { background: var(--facebook); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
-        .inspect-btn { background: var(--gold); color: #000; padding: 6px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-        .whatsapp-nav-btn { background: var(--whatsapp); color: white; padding: 6px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; text-decoration: none; display: flex; align-items: center; gap: 6px; }
-        .cart-icon { position: relative; cursor: pointer; font-size: 1.4rem; color: var(--dark); }
-        .cart-count { position: absolute; top: -8px; right: -12px; background: var(--gold); border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+        .logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .logo img { height: 45px; }
+        .logo span { font-size: 1.6rem; font-weight: 900; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-buttons { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .fb-btn { background: var(--facebook); color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+        .inspect-btn { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--dark); padding: 8px 20px; border-radius: 30px; font-weight: 700; border: none; cursor: pointer; }
+        .whatsapp-nav-btn { background: var(--whatsapp); color: white; padding: 8px 20px; border-radius: 30px; text-decoration: none; font-weight: 700; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.4rem; }
+        .cart-count { position: absolute; top: -8px; right: -12px; background: var(--gold); border-radius: 50%; width: 20px; height: 20px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: 900; }
         
-        .top-scroll {
-            background: var(--dark);
-            color: var(--gold);
-            padding: 8px 0;
-            overflow: hidden;
-            white-space: nowrap;
+        /* الرول المتحرك */
+        .marquee {
             position: fixed;
-            top: 62px;
+            top: 68px;
             left: 0;
             right: 0;
-            z-index: 150;
-            font-weight: 600;
-            font-size: 0.85rem;
+            background: linear-gradient(90deg, #0a0a1a, #1a1a2e, #0a0a1a);
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 999;
+            padding: 14px 0;
+            border-top: 2px solid var(--gold);
+            border-bottom: 2px solid var(--gold);
         }
-        .top-scroll span {
+        .marquee-content {
             display: inline-block;
-            padding-left: 50px;
-            animation: scrollText 25s linear infinite;
+            animation: marqueeMove 35s linear infinite;
+            color: var(--gold);
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding-right: 20px;
         }
-        @keyframes scrollText {
+        .marquee-content i { margin: 0 12px; color: var(--gold); }
+        @keyframes marqueeMove {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
         
         .hero {
-            margin-top: 110px;
-            height: 70vh;
+            margin-top: 130px;
+            height: 85vh;
             min-height: 500px;
-            background-image: url('https://images.pexels.com/photos/1571460/kitchen-home-design-modern-1571460.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://images.pexels.com/photos/1571460/kitchen-home-design-modern-1571460.jpeg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -95,257 +91,130 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            position: relative;
         }
-        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); }
-        .hero-content { position: relative; color: white; padding: 20px; max-width: 800px; }
-        .hero-content h1 { font-size: 2.5rem; margin-bottom: 15px; }
+        .hero-content h1 { font-size: 3rem; color: white; }
         .hero-content h1 span { color: var(--gold); }
-        .hero-content p { font-size: 1rem; line-height: 1.7; }
+        .hero-content p { font-size: 1.2rem; color: white; margin-top: 15px; }
         
-        .engineers {
-            background: linear-gradient(135deg, var(--dark), #1a1a2e);
-            color: white;
-            text-align: center;
-            padding: 25px;
-        }
-        
-        .features {
-            padding: 50px 5%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+        .features-section {
+            padding: 60px 5%;
             background: var(--light);
         }
-        .feature {
-            background: var(--white);
-            padding: 35px 20px;
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: white;
+            padding: 35px 25px;
             border-radius: 20px;
             text-align: center;
             transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
-        .feature:hover { transform: translateY(-5px); }
-        .feature i { font-size: 2.2rem; color: var(--gold); margin-bottom: 12px; }
-        .feature h3 { font-size: 1.3rem; margin-bottom: 8px; }
-        .feature p { color: #666; }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .feature-card i { font-size: 2.5rem; color: var(--gold); margin-bottom: 15px; }
+        .feature-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--dark); }
+        .feature-card p { color: #666; line-height: 1.6; }
         
-        .warranty {
-            background: var(--dark);
-            color: white;
-            padding: 50px 5%;
-            text-align: center;
-        }
-        .warranty h2 { color: var(--gold); margin-bottom: 25px; }
-        .warranty-box {
-            background: rgba(255,255,255,0.08);
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: right;
-        }
-        .warranty-box p { margin: 15px 0; }
-        .contract-btn {
-            background: var(--gold);
-            color: var(--dark);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 35px;
-            font-weight: 900;
-            margin-top: 25px;
-            cursor: pointer;
-        }
-        
-        .products {
+        .warranty-section {
+            background: linear-gradient(135deg, var(--dark), var(--dark-light));
             padding: 60px 5%;
         }
-        .title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 45px;
-            color: var(--dark);
+        .warranty-box {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
+        .warranty-box h2 { color: var(--gold); font-size: 1.8rem; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+        .warranty-list { list-style: none; }
+        .warranty-list li { color: white; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px; }
+        .warranty-list li i { color: var(--gold); width: 25px; }
+        
+        .section-title { text-align: center; font-size: 2.5rem; margin: 60px 0 40px; color: var(--dark); }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--gold); margin: 15px auto; border-radius: 2px; }
+        
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 35px;
+            padding: 0 5% 60px;
         }
-        @media (max-width: 700px) {
-            .product-grid { grid-template-columns: 1fr; }
-        }
-        .card {
-            background: var(--white);
-            border-radius: 18px;
+        .product-card {
+            background: white;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
-            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: 0.4s;
+            cursor: pointer;
             position: relative;
         }
-        .card:hover { transform: translateY(-5px); }
-        
-        /* شريط التخفيض الأحمر */
-        .discount-ribbon {
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .product-img { width: 100%; height: 240px; object-fit: cover; }
+        .discount-badge {
             position: absolute;
             top: 15px;
             right: 15px;
             background: var(--discount-red);
             color: white;
-            padding: 5px 12px;
+            padding: 5px 15px;
             border-radius: 25px;
             font-weight: 900;
-            font-size: 0.8rem;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .card-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            cursor: pointer;
-            loading: lazy;
-        }
-        .card-info { padding: 18px; }
-        .card-info h4 { font-size: 1.2rem; margin-bottom: 5px; }
-        .price {
-            color: var(--gold);
-            font-weight: 900;
-            font-size: 1.1rem;
-            margin: 8px 0;
-        }
-        .price-per-meter {
-            color: #666;
             font-size: 0.85rem;
-            margin-top: -5px;
-            margin-bottom: 8px;
+            z-index: 10;
         }
-        .old-price {
-            text-decoration: line-through;
-            color: #999;
-            font-size: 0.9rem;
-            margin-left: 8px;
-        }
-        .card-buttons { display: flex; gap: 10px; margin-top: 12px; }
-        .cart-btn {
-            flex: 1;
-            padding: 10px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .whatsapp-order-btn {
-            flex: 1;
-            padding: 10px;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            background: var(--whatsapp);
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .toast {
-            position: fixed;
-            top: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gold);
-            color: var(--dark);
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 900;
-            z-index: 300;
-            animation: toastFade 2s ease;
-        }
-        @keyframes toastFade {
-            0% { opacity: 0; top: 60px; }
-            15% { opacity: 1; top: 80px; }
-            85% { opacity: 1; top: 80px; }
-            100% { opacity: 0; top: 60px; visibility: hidden; }
-        }
-        
-        .image-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 5000;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        .image-modal.active { display: flex; }
-        .full-image {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-        }
-        .close-img {
+        .quality-badge {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            background: rgba(0,0,0,0.5);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: var(--gold);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 10;
         }
+        .product-info { padding: 18px; }
+        .product-info h4 { font-size: 1.2rem; margin-bottom: 8px; }
+        .price { color: var(--gold); font-weight: 900; font-size: 1.2rem; }
         
         .sidebar {
             position: fixed;
             top: 0;
-            right: -380px;
-            width: 360px;
+            right: -400px;
+            width: 380px;
             height: 100%;
-            background: var(--white);
-            box-shadow: -5px 0 25px rgba(0,0,0,0.15);
-            z-index: 1000;
+            background: white;
+            z-index: 1500;
             transition: 0.3s;
             padding: 80px 20px 20px;
             overflow-y: auto;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.15);
         }
         .sidebar.open { right: 0; }
-        .close-side { position: absolute; top: 15px; right: 15px; font-size: 1.4rem; cursor: pointer; }
-        .cart-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
-        .checkout-btn { width: 100%; padding: 12px; background: var(--gold); border: none; border-radius: 30px; font-weight: 900; cursor: pointer; margin-top: 15px; }
         
         .modal {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.85);
-            z-index: 2000;
+            background: rgba(0,0,0,0.9);
+            z-index: 3000;
             align-items: center;
             justify-content: center;
         }
         .modal.active { display: flex; }
         .modal-box {
-            background: var(--white);
-            padding: 25px;
-            border-radius: 20px;
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
             width: 500px;
             max-width: 90%;
             max-height: 85%;
@@ -353,687 +222,337 @@
         }
         .modal-box input, .modal-box select, .modal-box textarea {
             width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 10px;
-            border: 1px solid #ddd;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border: 2px solid #eee;
         }
-        .pay-opt { padding: 14px; margin: 10px 0; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 700; }
-        .pay-cash { background: #f0f0f0; }
-        .pay-instapay { background: #4B0082; color: white; }
         
-        .stats-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            display: none;
+            overflow-y: auto;
+            padding: 30px;
         }
-        .stat-card {
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
+        .admin-panel.active { display: block; }
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
         }
-        .stat-number {
-            font-size: 1.8rem;
+        .admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: linear-gradient(135deg, var(--dark), var(--dark-light)); color: white; padding: 20px; border-radius: 20px; text-align: center; }
+        .stat-number { font-size: 2rem; font-weight: 900; color: var(--gold); }
+        .admin-buttons { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
+        .admin-btn { padding: 12px 25px; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; background: var(--gold); color: var(--dark); }
+        .product-item { background: var(--light); padding: 15px; margin: 10px 0; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: var(--whatsapp);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            z-index: 100;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(37,211,102,0.4);
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        
+        .toast {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold);
+            color: var(--dark);
+            padding: 12px 25px;
+            border-radius: 50px;
             font-weight: 900;
-            color: var(--gold);
+            z-index: 4000;
+            animation: fadeInOut 3s ease forwards;
         }
-        .stat-label {
-            font-size: 0.8rem;
-            color: #666;
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-30px); visibility: hidden; }
         }
         
         footer {
             background: var(--dark);
             color: white;
-            padding: 35px 20px;
+            padding: 40px 20px;
             text-align: center;
         }
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--whatsapp);
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: white;
-            z-index: 100;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 1.8rem; }
+            .product-grid { grid-template-columns: 1fr; }
+            .marquee-content { font-size: 0.7rem; }
+            .hero { margin-top: 145px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo" id="secretLogo">
-            <img src="https://i.ibb.co/Ldvz14jx/Chat-GPT-Image-9-2026-12-22-29.png" alt="ضجه">
-            <span>ضجه</span>
-        </div>
-        <div class="nav-buttons">
-            <a href="https://www.facebook.com/share/18AaN7cHcm/" target="_blank" class="fb-btn"><i class="fab fa-facebook-f"></i></a>
-            <button class="inspect-btn" onclick="openInspectModal()"><i class="fas fa-eye"></i> معاينة مجانية</button>
-            <a href="https://wa.me/201144265938" class="whatsapp-nav-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
-            <div class="cart-icon" onclick="toggleCart()">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count" id="cartCount">0</span>
-            </div>
-        </div>
-    </header>
-
-    <div class="top-scroll">
-        <span>✨ ضجه سيستيم | شغل معمول بإتقان، وتشطيب يبان من أول نظرة | تصميمات مودرن، خامات قوية | ضمان 5 سنوات ضد عيوب الصناعة | توصيل وتركيب باحترافية ✨</span>
+<header>
+    <div class="logo" id="secretLogo">
+        <img src="https://i.ibb.co/Ldvz14jx/Chat-GPT-Image-9-2026-12-22-29.png" alt="ضجه">
+        <span>ضجه سيستيم</span>
     </div>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>أهلاً بكم في <span>ضجه</span></h1>
-            <p>نصمم لك مطبخاً يجمع بين القوة الهندسية والجمال العصري باستخدام نظام ضجه سيستيم المبتكر. دقة متناهية في التقطيع، خامات عالمية ضد الرطوبة، تشطيب يبان من أول نظرة. فريق خبراء في التركيب، وتوصيل لجميع المحافظات من عربيات المصنع، وهتستلم مطبخك على الحيطه راكب باحترافية.</p>
-        </div>
-    </section>
-
-    <section class="engineers">
-        <p>تحت إشراف <strong>المهندس أحمد السيد</strong> | <strong>المهندس ياسين علاء</strong></p>
-        <p style="font-size:0.8rem; margin-top:5px;">خبرة أكثر من 10 سنوات في تصميم وتنفيذ المطابخ الفاخرة</p>
-    </section>
-
-    <section class="features">
-        <div class="feature"><i class="fas fa-microchip"></i><h3>ضجه سيستيم</h3><p>دقة متناهية في حسابات التقطيع تمنع أي خطأ بشري وتضمن استلام مطبخ هندسي 100%</p></div>
-        <div class="feature"><i class="fas fa-gem"></i><h3>خامات قوية</h3><p>ألومنيوم ثقيل معالج ضد الرطوبة مع إكسسوارات إيطالية هيدروليك تدوم لسنوات</p></div>
-        <div class="feature"><i class="fas fa-crown"></i><h3>فخامة حقيقية</h3><p>تشطيب يبان من أول نظرة وتفاصيل معمولة بأعلى كفاءة وأفضل جودة</p></div>
-    </section>
-
-    <section class="warranty">
-        <h2><i class="fas fa-file-contract"></i> الضمانات</h2>
-        <div class="warranty-box">
-            <p><i class="fas fa-file-signature"></i> <strong>عقد اتفاق يتم التوقيع عليه من العميل والمصنع</strong> - بكل ما ورد من اتفاق بين الطرفين</p>
-            <p><i class="fas fa-certificate"></i> <strong>شهادة ضمان 5 سنوات</strong> - ضد عيوب الصناعة، يتم تسليمها مع استلام المطبخ</p>
-            <p><i class="fas fa-tools"></i> <strong>فريق تركيب خبراء</strong> - متخصصون في تركيب المطابخ بأعلى كفاءة وفي أسرع وقت</p>
-            <p><i class="fas fa-truck"></i> <strong>توصيل لجميع المحافظات</strong> - من عربيات المصنع، وفريق التركيب مع العربية</p>
-            <p><i class="fas fa-hand-sparkles"></i> <strong>هتستلم مطبخك على الحيطه راكب</strong> - جاهز تماماً للاستخدام، بدون أي عناء من جانبك</p>
-        </div>
-        <button class="contract-btn" onclick="openContractModal()"><i class="fas fa-file-signature"></i> نموذج عقد الاتفاق</button>
-    </section>
-
-    <section class="products" id="products">
-        <h2 class="title">✨ منتجاتنا ✨</h2>
-        <div class="product-grid" id="productGrid"></div>
-    </section>
-
-    <div class="image-modal" id="imageModal" onclick="closeImageModal()">
-        <span class="close-img" onclick="closeImageModal()"><i class="fas fa-times"></i></span>
-        <img class="full-image" id="fullImage" src="">
-    </div>
-
-    <div class="sidebar" id="cartSidebar">
-        <div class="close-side" onclick="toggleCart()"><i class="fas fa-times"></i></div>
-        <h3><i class="fas fa-shopping-cart"></i> سلة التسوق</h3>
-        <div id="cartItemsList"></div>
-        <div id="cartTotalAmount" style="font-weight:900; font-size:1.2rem; margin:20px 0;">الإجمالي: 0 جنيه</div>
-        <button class="checkout-btn" onclick="showPaymentModal()"><i class="fas fa-credit-card"></i> إتمام الشراء</button>
-    </div>
-
-    <div class="modal" id="paymentModal">
-        <div class="modal-box">
-            <h3>اختر طريقة الدفع</h3>
-            <div class="pay-opt pay-cash" onclick="selectPayment('cash')"><i class="fas fa-money-bill-wave"></i> كاش عند الاستلام</div>
-            <div class="pay-opt pay-instapay" onclick="selectPayment('instapay')"><i class="fas fa-mobile-alt"></i> إنستا باي</div>
-            <button onclick="closeModal('paymentModal')" style="margin-top:15px; background:#eee; border:none; padding:10px; width:100%; border-radius:30px;">إلغاء</button>
+    <div class="nav-buttons">
+        <a href="https://www.facebook.com/share/18AaN7cHcm/" target="_blank" class="fb-btn"><i class="fab fa-facebook-f"></i></a>
+        <button class="inspect-btn" onclick="openInspectModal()"><i class="fas fa-eye"></i> معاينة مجانية</button>
+        <a href="https://wa.me/201144265938" class="whatsapp-nav-btn"><i class="fab fa-whatsapp"></i> واتساب</a>
+        <div class="cart-icon" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
         </div>
     </div>
+</header>
 
-    <div class="modal" id="receiptModal">
-        <div class="modal-box">
-            <h3><i class="fas fa-upload"></i> إثبات التحويل</h3>
-            <p>رقم التحويل: <strong style="color:var(--gold);">01144265938</strong></p>
-            <input type="file" id="receiptFile" accept="image/*">
-            <button onclick="uploadReceipt()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px; margin-top:10px;">إرسال الإثبات</button>
-            <button onclick="closeModal('receiptModal')" style="margin-top:10px; background:#eee; border:none; padding:10px; width:100%; border-radius:30px;">إلغاء</button>
-        </div>
+<!-- الرول المتحرك بالكلام اللي انت بعته -->
+<div class="marquee">
+    <div class="marquee-content">
+        <i class="fas fa-heart"></i> "لأن المطبخ هو قلب بيتك.. نحن لا نعتمد على العشوائية، بل نصممه لك بمعايير هندسية متكاملة." 
+        <i class="fas fa-microchip"></i> في موقعنا، قمنا بدمج التكنولوجيا والبرمجة الذكية مع فن صناعة وتصميم مطابخ الألوميتال والكلادينج. 
+        <i class="fas fa-chart-line"></i> نحن لا نقوم بمجرد تقطيع وتجميع الخامات، بل نخضع مساحة مطبخك لمنظومة حسابية دقيقة تضمن استغلال كل سنتيمتر بالشكل الأمثل. 
+        <i class="fas fa-crown"></i> ضجه سيستيم | دقة هندسية | جودة عالمية 
+        <i class="fas fa-heart"></i> "لأن المطبخ هو قلب بيتك.. نحن لا نعتمد على العشوائية، بل نصممه لك بمعايير هندسية متكاملة." 
+        <i class="fas fa-microchip"></i> في موقعنا، قمنا بدمج التكنولوجيا والبرمجة الذكية مع فن صناعة وتصميم مطابخ الألوميتال والكلادينج. 
+        <i class="fas fa-chart-line"></i> نحن لا نقوم بمجرد تقطيع وتجميع الخامات، بل نخضع مساحة مطبخك لمنظومة حسابية دقيقة تضمن استغلال كل سنتيمتر بالشكل الأمثل. 
+        <i class="fas fa-crown"></i> ضجه سيستيم | دقة هندسية | جودة عالمية 
     </div>
+</div>
 
-    <div class="modal" id="inspectModal">
-        <div class="modal-box">
-            <h3><i class="fas fa-home"></i> طلب معاينة مجانية</h3>
-            <input type="text" id="inspectName" placeholder="الاسم بالكامل">
-            <input type="text" id="inspectPhone" placeholder="رقم التليفون">
-            <input type="text" id="inspectAddress" placeholder="العنوان بالكامل">
-            <select id="inspectArea">
-                <option value="inside">داخل القاهرة (مجانية)</option>
-                <option value="outside">خارج القاهرة (برسوم رمزية)</option>
-            </select>
-            <button onclick="sendInspection()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px; margin-top:10px;">إرسال الطلب</button>
-            <button onclick="closeModal('inspectModal')" style="margin-top:10px; background:#eee; border:none; padding:10px; width:100%; border-radius:30px;">إلغاء</button>
-        </div>
+<section class="hero">
+    <div class="hero-content">
+        <h1>أهلاً بكم في <span>ضجه</span></h1>
+        <p>نصمم لك مطبخاً يجمع بين القوة الهندسية والجمال العصري<br>باستخدام نظام ضجه سيستيم المبتكر</p>
+        <button onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})" style="margin-top:25px; background:var(--gold); border:none; padding:12px 35px; border-radius:40px; font-weight:900; cursor:pointer;">استكشف منتجاتنا ←</button>
     </div>
+</section>
 
-    <div class="modal" id="contractModal">
-        <div class="modal-box">
-            <h3><i class="fas fa-file-contract"></i> عقد الاتفاق</h3>
-            <input type="text" id="contractName" placeholder="اسم العميل">
-            <input type="text" id="contractPhone" placeholder="رقم التليفون">
-            <input type="text" id="contractProduct" placeholder="نوع المطبخ">
-            <input type="text" id="contractPrice" placeholder="إجمالي المبلغ">
-            <textarea id="contractNotes" placeholder="أي تفاصيل إضافية" rows="2"></textarea>
-            <button onclick="createContract()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px;">إنشاء العقد وإرساله</button>
-            <button onclick="closeModal('contractModal')" style="margin-top:10px; background:#eee; border:none; padding:10px; width:100%; border-radius:30px;">إلغاء</button>
-        </div>
+<section class="features-section">
+    <div class="features-grid">
+        <div class="feature-card"><i class="fas fa-microchip"></i><h3>ضجه سيستيم</h3><p>دقة متناهية في حسابات التقطيع تمنع أي خطأ بشري</p></div>
+        <div class="feature-card"><i class="fas fa-gem"></i><h3>خامات قوية</h3><p>ألومنيوم ثقيل معالج ضد الرطوبة، إكسسوارات إيطالية</p></div>
+        <div class="feature-card"><i class="fas fa-crown"></i><h3>فخامة حقيقية</h3><p>تشطيب يبان من أول نظرة، أفضل جودة في السوق</p></div>
+        <div class="feature-card"><i class="fas fa-chart-line"></i><h3>منظومة حسابية دقيقة</h3><p>نخضع مساحة مطبخك لمنظومة حسابية تضمن استغلال كل سنتيمتر</p></div>
     </div>
+</section>
 
-    <div class="modal" id="adminPanel">
-        <div class="modal-box" style="width:550px;">
-            <h3><i class="fas fa-crown"></i> لوحة تحكم ضجه</h3>
-            
-            <div class="stats-cards">
-                <div class="stat-card">
-                    <div class="stat-number" id="statVisitors">0</div>
-                    <div class="stat-label">👥 زائر فريد</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="statInspections">0</div>
-                    <div class="stat-label">🏠 طلبات معاينة</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="statPageViews">0</div>
-                    <div class="stat-label">👁️ إجمالي مشاهدات</div>
-                </div>
-            </div>
-            
-            <button onclick="showProductsManager()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px; margin:5px 0; font-weight:700; cursor:pointer;"><i class="fas fa-boxes"></i> إدارة المنتجات</button>
-            <button onclick="showOrdersManager()" style="background:var(--dark); color:white; border:none; padding:12px; width:100%; border-radius:30px; margin:5px 0; font-weight:700; cursor:pointer;"><i class="fas fa-list"></i> عرض الطلبات</button>
-            <div id="adminContent" style="margin-top:15px;"></div>
-            <button onclick="closeModal('adminPanel')" style="background:#eee; border:none; padding:10px; width:100%; border-radius:30px; margin-top:10px; cursor:pointer;">إغلاق</button>
-        </div>
+<section class="warranty-section">
+    <div class="warranty-box">
+        <h2><i class="fas fa-shield-alt"></i> الضمان والجودة</h2>
+        <ul class="warranty-list">
+            <li><i class="fas fa-check-circle"></i> ضمان 5 سنوات ضد عيوب الصناعة</li>
+            <li><i class="fas fa-check-circle"></i> ضمان على الإكسسوارات والمفصلات الهيدروليك</li>
+            <li><i class="fas fa-check-circle"></i> استبدال فوري لأي قطعة بها عيب صناعة</li>
+            <li><i class="fas fa-file-signature"></i> عقد اتفاق موقع ومصدق من الطرفين</li>
+            <li><i class="fas fa-truck"></i> توصيل وتركيب من عربيات المصنع</li>
+            <li><i class="fas fa-hand-sparkles"></i> هتستلم مطبخك على الحيطه راكب جاهز تماماً</li>
+        </ul>
     </div>
+</section>
 
-    <a href="https://wa.me/201144265938" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<section class="products" id="products">
+    <h2 class="section-title">✨ منتجاتنا الفاخرة ✨</h2>
+    <div class="product-grid" id="productGrid"></div>
+</section>
 
-    <footer>
-        <p>© 2026 ضجه - جميع الحقوق محفوظة</p>
-        <p>تحت إشراف المهندس أحمد السيد والمهندس ياسين علاء</p>
-        <p style="font-size:0.8rem;">توصيل لجميع المحافظات - فريق تركيب خبراء - ضمان 5 سنوات ضد عيوب الصناعة</p>
-    </footer>
+<div class="sidebar" id="cartSidebar">
+    <div style="display:flex; justify-content:space-between; margin-bottom:20px;"><h3><i class="fas fa-shopping-cart"></i> سلة التسوق</h3><span onclick="toggleCart()" style="cursor:pointer; font-size:1.5rem;">&times;</span></div>
+    <div id="cartItemsList"></div>
+    <div id="cartTotalAmount" style="font-weight:900; font-size:1.3rem; margin:20px 0;">الإجمالي: 0 جنيه</div>
+    <button onclick="showPaymentModal()" style="width:100%; padding:14px; background:var(--gold); border:none; border-radius:30px; font-weight:900; cursor:pointer;"><i class="fas fa-credit-card"></i> إتمام الشراء</button>
+</div>
 
-    <script>
-        const firebaseConfig = { databaseURL: "https://ded-el-kasr-default-rtdb.firebaseio.com/" };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+<div id="productModal" class="modal"><div class="modal-box" style="max-width:700px;"><div id="productModalContent"></div><button onclick="closeModal('productModal')" style="margin-top:15px; background:#eee; padding:10px; width:100%; border-radius:30px;">إغلاق</button></div></div>
+<div id="inspectModal" class="modal"><div class="modal-box"><h3>طلب معاينة مجانية</h3><input type="text" id="inspectName" placeholder="الاسم بالكامل"><input type="text" id="inspectPhone" placeholder="رقم التليفون"><input type="text" id="inspectAddress" placeholder="العنوان"><select id="inspectArea"><option value="inside">داخل القاهرة (مجانية)</option><option value="outside">خارج القاهرة (برسوم رمزية)</option></select><button onclick="sendInspection()" style="background:var(--gold); padding:12px; width:100%; border-radius:30px; margin-top:10px; font-weight:700; cursor:pointer;">إرسال الطلب</button><button onclick="closeModal('inspectModal')" style="margin-top:10px; background:#eee; padding:10px; width:100%; border-radius:30px;">إلغاء</button></div></div>
+<div id="paymentModal" class="modal"><div class="modal-box"><h3>اختر طريقة الدفع</h3><div onclick="selectPayment('cash')" style="background:#f0f0f0; padding:15px; margin:10px 0; border-radius:12px; text-align:center; font-weight:700; cursor:pointer;">كاش عند الاستلام</div><div onclick="selectPayment('instapay')" style="background:#4B0082; color:white; padding:15px; margin:10px 0; border-radius:12px; text-align:center; font-weight:700; cursor:pointer;">إنستا باي</div><button onclick="closeModal('paymentModal')" style="margin-top:15px; background:#eee; padding:10px; width:100%; border-radius:30px;">إلغاء</button></div></div>
+<div id="receiptModal" class="modal"><div class="modal-box"><h3>إثبات التحويل</h3><p>رقم التحويل: <strong style="color:var(--gold);">01144265938</strong></p><input type="file" id="receiptFile" accept="image/*"><button onclick="uploadReceipt()" style="background:var(--gold); padding:12px; width:100%; border-radius:30px; margin-top:10px;">إرسال الإثبات</button><button onclick="closeModal('receiptModal')" style="margin-top:10px; background:#eee; padding:10px; width:100%; border-radius:30px;">إلغاء</button></div></div>
+<div id="contractModal" class="modal"><div class="modal-box"><h3>عقد الاتفاق</h3><input type="text" id="contractName" placeholder="اسم العميل"><input type="text" id="contractPhone" placeholder="رقم التليفون"><input type="text" id="contractProduct" placeholder="نوع المطبخ"><input type="text" id="contractPrice" placeholder="إجمالي المبلغ"><textarea id="contractNotes" placeholder="ملاحظات" rows="2"></textarea><button onclick="createContract()" style="background:var(--gold); padding:12px; width:100%; border-radius:30px; margin-top:10px;">إنشاء العقد وإرساله</button><button onclick="closeModal('contractModal')" style="margin-top:10px; background:#eee; padding:10px; width:100%; border-radius:30px;">إلغاء</button></div></div>
 
-        let visitorId = localStorage.getItem('visitorId');
-        if(!visitorId) {
-            visitorId = Date.now() + '-' + Math.random();
-            localStorage.setItem('visitorId', visitorId);
-            db.ref('stats/visitors').transaction(v => (v || 0) + 1);
-        }
-        db.ref('stats/pageViews').transaction(pv => (pv || 0) + 1);
+<div id="adminPanel" class="admin-panel"><div class="admin-container"><div style="display:flex; justify-content:space-between; margin-bottom:20px;"><h2><i class="fas fa-crown" style="color:var(--gold);"></i> لوحة تحكم ضجه</h2><button onclick="closeAdminPanel()" style="background:var(--danger); color:white; border:none; padding:10px 20px; border-radius:30px; cursor:pointer;">إغلاق</button></div><div class="admin-stats"><div class="stat-card"><div class="stat-number" id="statVisitors">0</div><div>👥 زوار</div></div><div class="stat-card"><div class="stat-number" id="statInspections">0</div><div>🏠 معاينة</div></div><div class="stat-card"><div class="stat-number" id="statOrders">0</div><div>📦 طلبات</div></div><div class="stat-card"><div class="stat-number" id="statProducts">0</div><div>🛍️ منتجات</div></div></div><div class="admin-buttons"><button class="admin-btn" onclick="showProductsManager()"><i class="fas fa-boxes"></i> إدارة المنتجات</button><button class="admin-btn" onclick="showOrdersManager()"><i class="fas fa-list"></i> الطلبات</button><button class="admin-btn" onclick="showInspectionsManager()"><i class="fas fa-eye"></i> المعاينة</button><button class="admin-btn" onclick="showAddProductForm()"><i class="fas fa-plus"></i> إضافة منتج</button></div><div id="adminContent"></div></div></div>
 
-        let cart = [];
-        let tempOrder = null;
+<a href="https://wa.me/201144265938" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
-        function showToast(message) {
-            let toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2000);
-        }
+<footer>
+    <p><i class="fas fa-shield-alt" style="color:var(--gold);"></i> ضمان 5 سنوات ضد عيوب الصناعة</p>
+    <p>© 2026 ضجه سيستيم - جميع الحقوق محفوظة</p>
+    <p>تحت إشراف المهندس أحمد السيد والمهندس ياسين علاء</p>
+</footer>
 
-        function openImageModal(src) {
-            document.getElementById('fullImage').src = src;
-            document.getElementById('imageModal').classList.add('active');
-        }
-        function closeImageModal() {
-            document.getElementById('imageModal').classList.remove('active');
-        }
+<script>
+    const firebaseConfig = { databaseURL: "https://ded-el-kasr-default-rtdb.firebaseio.com/" };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-        function formatPrice(price, discount) {
-            let original = parseInt(price);
-            let afterDiscount = original;
-            let discountText = '';
-            
-            if(discount && discount > 0) {
-                afterDiscount = original - (original * discount / 100);
-                discountText = `<div class="discount-ribbon">🔥 خصم ${discount}%</div>`;
-            }
-            
-            return { original, afterDiscount, discountText };
-        }
+    let cart = [];
 
-        function loadProducts() {
-            db.ref('products').once('value').then(snap => {
-                const grid = document.getElementById('productGrid');
-                grid.innerHTML = '';
-                if(!snap.exists()) {
-                    grid.innerHTML = '<div style="text-align:center;">لا توجد منتجات حالياً - أضف منتجات من لوحة التحكم</div>';
-                    return;
-                }
-                snap.forEach(child => {
-                    const p = child.val();
-                    const { original, afterDiscount, discountText } = formatPrice(p.price, p.discount);
-                    
-                    let priceHTML = '';
-                    if(p.discount && p.discount > 0) {
-                        priceHTML = `
-                            <div class="price">
-                                <span class="old-price">${original} جنيه</span>
-                                <span>${afterDiscount} جنيه</span>
-                            </div>
-                            <div class="price-per-meter">⭐ السعر: ${afterDiscount} جنيه للمتر المربع</div>
-                        `;
-                    } else {
-                        priceHTML = `
-                            <div class="price">${original} جنيه</div>
-                            <div class="price-per-meter">⭐ السعر: ${original} جنيه للمتر المربع</div>
-                        `;
-                    }
-                    
-                    grid.innerHTML += `
-                        <div class="card">
-                            ${discountText}
-                            <img src="${p.url}" alt="${p.name}" class="card-img" loading="lazy" onclick="openImageModal('${p.url}')">
-                            <div class="card-info">
-                                <h4>${p.name}</h4>
-                                ${priceHTML}
-                                <div class="card-buttons">
-                                    <button class="cart-btn" onclick="addToCart('${p.name}', ${afterDiscount})"><i class="fas fa-cart-plus"></i> سلة</button>
-                                    <a href="https://wa.me/201144265938?text=السلام عليكم مهندس، أنا مهتم بـ ${p.name}" target="_blank" class="whatsapp-order-btn"><i class="fab fa-whatsapp"></i> تواصل واتساب</a>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            });
-        }
-
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            updateCartUI();
-            showToast(`✅ تم إضافة ${name} إلى السلة`);
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const container = document.getElementById('cartItemsList');
-            const totalSpan = document.getElementById('cartTotalAmount');
-            const badge = document.getElementById('cartCount');
-            let total = 0;
-            container.innerHTML = '';
-            cart.forEach((item, idx) => {
-                total += item.price;
-                container.innerHTML += `
-                    <div class="cart-item">
-                        <span>${item.name}</span>
-                        <span>${item.price} ج <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:red; cursor:pointer;"><i class="fas fa-trash"></i></button></span>
-                    </div>
-                `;
-            });
-            totalSpan.innerText = `الإجمالي: ${total} جنيه`;
-            badge.innerText = cart.length;
-        }
-
-        function toggleCart() {
-            document.getElementById('cartSidebar').classList.toggle('open');
-        }
-
-        function showPaymentModal() {
-            if(cart.length === 0) {
-                alert("السلة فارغة! أضف منتجات أولاً.");
+    function showToast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = '<i class="fas fa-check-circle"></i> ' + msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    function toggleCart() { document.getElementById('cartSidebar').classList.toggle('open'); }
+    
+    function addToCart(name, price) { cart.push({ name, price }); updateCartUI(); showToast(`✅ تم إضافة ${name}`); }
+    function removeFromCart(i) { cart.splice(i,1); updateCartUI(); }
+    function updateCartUI() {
+        const container = document.getElementById('cartItemsList');
+        const totalSpan = document.getElementById('cartTotalAmount');
+        const badge = document.getElementById('cartCount');
+        let total = 0;
+        container.innerHTML = '';
+        cart.forEach((item, idx) => { total += item.price; container.innerHTML += `<div style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #eee;"><span>${item.name}</span><span>${item.price} ج <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:red; cursor:pointer;"><i class="fas fa-trash"></i></button></span></div>`; });
+        totalSpan.innerText = `الإجمالي: ${total} جنيه`;
+        badge.innerText = cart.length;
+    }
+    
+    function showPaymentModal() { if(cart.length===0){ showToast("السلة فارغة!"); return; } document.getElementById('paymentModal').classList.add('active'); }
+    function selectPayment(type) { closeModal('paymentModal'); if(type==='cash') processCashOrder(); else document.getElementById('receiptModal').classList.add('active'); }
+    
+    function processCashOrder() {
+        const name = prompt("الاسم بالكامل:"); if(!name) return;
+        const phone = prompt("رقم التليفون:"); if(!phone) return;
+        const order = { id: Date.now(), customer: name, phone, items: [...cart], total: cart.reduce((s,i)=>s+i.price,0), payment: 'كاش', status: 'جديد', date: new Date().toLocaleString('ar-EG') };
+        db.ref('orders').push(order).then(() => { showToast("✅ تم استلام طلبك!"); window.open(`https://wa.me/201144265938?text=${encodeURIComponent(`🛍️ طلب جديد\nالعميل: ${name}\n📞 ${phone}\n💰 ${order.total} جنيه`)}`,'_blank'); cart=[]; updateCartUI(); toggleCart(); });
+    }
+    
+    function uploadReceipt() {
+        const file = document.getElementById('receiptFile').files[0];
+        if(!file){ showToast("ارفع الصورة"); return; }
+        const name = prompt("الاسم:"); if(!name) return;
+        const phone = prompt("رقم التليفون:"); if(!phone) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const order = { id: Date.now(), customer: name, phone, items: [...cart], total: cart.reduce((s,i)=>s+i.price,0), payment: 'إنستا باي', receiptImage: e.target.result, status: 'جديد', date: new Date().toLocaleString('ar-EG') };
+            db.ref('orders').push(order).then(() => { showToast("✅ تم استلام طلبك!"); window.open(`https://wa.me/201144265938?text=${encodeURIComponent(`🛍️ طلب إنستا باي\nالعميل: ${name}\n📞 ${phone}\n💰 ${order.total} جنيه`)}`,'_blank'); cart=[]; updateCartUI(); toggleCart(); closeModal('receiptModal'); document.getElementById('receiptFile').value=''; });
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    function openInspectModal() { document.getElementById('inspectModal').classList.add('active'); }
+    function sendInspection() {
+        const name = document.getElementById('inspectName').value;
+        const phone = document.getElementById('inspectPhone').value;
+        if(!name || !phone){ showToast("الاسم والرقم مطلوبان"); return; }
+        const insp = { name, phone, address: document.getElementById('inspectAddress').value, area: document.getElementById('inspectArea').value, date: new Date().toLocaleString('ar-EG') };
+        db.ref('inspections').push(insp).then(() => { showToast("✅ تم طلب المعاينة!"); window.open(`https://wa.me/201144265938?text=${encodeURIComponent(`🏠 معاينة مجانية\nالاسم: ${insp.name}\n📞 ${insp.phone}\n📍 ${insp.address}`)}`,'_blank'); closeModal('inspectModal'); document.getElementById('inspectName').value=''; document.getElementById('inspectPhone').value=''; document.getElementById('inspectAddress').value=''; updateAdminStats(); });
+    }
+    
+    function openContractModal() { document.getElementById('contractModal').classList.add('active'); }
+    function createContract() {
+        const name = document.getElementById('contractName').value;
+        const phone = document.getElementById('contractPhone').value;
+        if(!name || !phone){ showToast("أدخل البيانات"); return; }
+        const contract = `📄 عقد اتفاق - ضجه للمطابخ\nالعميل: ${name}\n📞 ${phone}\nنوع المطبخ: ${document.getElementById('contractProduct').value}\nالمبلغ: ${document.getElementById('contractPrice').value}\nالملاحظات: ${document.getElementById('contractNotes').value}\nالضمان: 5 سنوات\nالتسليم: المطبخ راكب على الحائط\nالتاريخ: ${new Date().toLocaleDateString('ar-EG')}`;
+        alert(contract);
+        window.open(`https://wa.me/201144265938?text=${encodeURIComponent(contract)}`,'_blank');
+        closeModal('contractModal');
+    }
+    
+    function loadProducts() {
+        db.ref('products').once('value').then(snap => {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            if(!snap.exists()) {
+                const defaultProducts = [
+                    { name: 'مطبخ الألمنيوم الفاخر', price: 2800, discount: 15, url: 'https://images.pexels.com/photos/1571460/kitchen-home-design-modern-1571460.jpeg', specs: 'خامات ألمنيوم ثقيل إيطالي، إكسسوارات هيدروليك.' },
+                    { name: 'مطبخ رخام جلالة', price: 3500, discount: 0, url: 'https://images.pexels.com/photos/1571463/kitchen-modern-house-1571463.jpeg', specs: 'رخام طبيعي، متانة عالية.' },
+                    { name: 'مطبخ خشب زان أمريكي', price: 4200, discount: 10, url: 'https://images.pexels.com/photos/1457841/kitchen-wooden-furniture-1457841.jpeg', specs: 'خشب زان صلد، مفصلات إيطالية.' }
+                ];
+                defaultProducts.forEach(p => { grid.innerHTML += createCard(p); });
                 return;
             }
-            document.getElementById('paymentModal').classList.add('active');
-        }
-
-        function selectPayment(type) {
-            closeModal('paymentModal');
-            if(type === 'cash') {
-                processCashOrder();
-            } else if(type === 'instapay') {
-                requestInstaPayReceipt();
-            }
-        }
-
-        function processCashOrder() {
-            const customerName = prompt("الاسم بالكامل:");
-            if(!customerName) return;
-            const customerPhone = prompt("رقم التليفون:");
-            if(!customerPhone) return;
-            
-            const order = {
-                id: Date.now(),
-                customer: customerName,
-                phone: customerPhone,
-                items: [...cart],
-                total: cart.reduce((s, i) => s + i.price, 0),
-                payment: 'كاش عند الاستلام',
-                status: 'جديد',
-                date: new Date().toLocaleString('ar-EG')
-            };
-            
-            db.ref('orders').push(order).then(() => {
-                alert("✅ تم استلام طلبك! سيتم التواصل معك قريباً.");
-                let msg = `🛍️ طلب جديد (كاش)\nالعميل: ${order.customer}\n📞 ${order.phone}\n💰 الإجمالي: ${order.total} جنيه`;
-                window.open(`https://wa.me/201144265938?text=${encodeURIComponent(msg)}`, '_blank');
-                cart = [];
-                updateCartUI();
-                toggleCart();
-            });
-        }
-
-        function requestInstaPayReceipt() {
-            const customerName = prompt("الاسم بالكامل:");
-            if(!customerName) return;
-            const customerPhone = prompt("رقم التليفون:");
-            if(!customerPhone) return;
-            
-            tempOrder = {
-                name: customerName,
-                phone: customerPhone,
-                items: [...cart],
-                total: cart.reduce((s, i) => s + i.price, 0)
-            };
-            document.getElementById('receiptModal').classList.add('active');
-        }
-
-        function uploadReceipt() {
-            const file = document.getElementById('receiptFile').files[0];
-            if(!file) {
-                alert("برجاء رفع صورة إثبات التحويل");
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const order = {
-                    id: Date.now(),
-                    customer: tempOrder.name,
-                    phone: tempOrder.phone,
-                    items: tempOrder.items,
-                    total: tempOrder.total,
-                    payment: 'إنستا باي',
-                    receiptImage: e.target.result,
-                    status: 'جديد',
-                    date: new Date().toLocaleString('ar-EG')
-                };
-                
-                db.ref('orders').push(order).then(() => {
-                    alert("✅ تم استلام طلبك وإثبات التحويل!");
-                    let msg = `🛍️ طلب جديد (إنستا باي)\nالعميل: ${order.customer}\n📞 ${order.phone}\n💰 الإجمالي: ${order.total} جنيه\n📷 تم إرفاق إثبات التحويل`;
-                    window.open(`https://wa.me/201144265938?text=${encodeURIComponent(msg)}`, '_blank');
-                    cart = [];
-                    updateCartUI();
-                    toggleCart();
-                    closeModal('receiptModal');
-                    document.getElementById('receiptFile').value = '';
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function openInspectModal() {
-            document.getElementById('inspectModal').classList.add('active');
-        }
-
-        function sendInspection() {
-            const name = document.getElementById('inspectName').value;
-            const phone = document.getElementById('inspectPhone').value;
-            if(!name || !phone) {
-                alert("برجاء إدخال الاسم ورقم التليفون");
-                return;
-            }
-            
-            const inspection = {
-                name: name,
-                phone: phone,
-                address: document.getElementById('inspectAddress').value,
-                area: document.getElementById('inspectArea').value,
-                date: new Date().toLocaleString('ar-EG')
-            };
-            
-            db.ref('inspections').push(inspection).then(() => {
-                alert("✅ تم طلب المعاينة المجانية! سيتم التواصل معكم قريباً.");
-                let msg = `🏠 طلب معاينة مجانية\nالاسم: ${inspection.name}\n📞 ${inspection.phone}\n📍 ${inspection.address}\n${inspection.area === 'inside' ? 'داخل القاهرة (مجاني)' : 'خارج القاهرة (برسوم رمزية)'}`;
-                window.open(`https://wa.me/201144265938?text=${encodeURIComponent(msg)}`, '_blank');
-                closeModal('inspectModal');
-                document.getElementById('inspectName').value = '';
-                document.getElementById('inspectPhone').value = '';
-                document.getElementById('inspectAddress').value = '';
-                updateStats();
-            });
-        }
-
-        function openContractModal() {
-            document.getElementById('contractModal').classList.add('active');
-        }
-
-        function createContract() {
-            const name = document.getElementById('contractName').value;
-            const phone = document.getElementById('contractPhone').value;
-            if(!name || !phone) {
-                alert("برجاء إدخال اسم العميل ورقم التليفون");
-                return;
-            }
-            
-            const contract = `
-📄 عقد اتفاق - شركة ضجه للمطابخ
-━━━━━━━━━━━━━━━━━━━━━━━
-العميل: ${name}
-رقم الهاتف: ${phone}
-نوع المطبخ: ${document.getElementById('contractProduct').value || 'غير محدد'}
-إجمالي المبلغ: ${document.getElementById('contractPrice').value || 'يتم الاتفاق عليه'}
-الملاحظات: ${document.getElementById('contractNotes').value || 'لا يوجد'}
-━━━━━━━━━━━━━━━━━━━━━━━
-الضمان: 5 سنوات ضد عيوب الصناعة
-التوصيل والتركيب: من عربيات المصنع وفريق خبراء
-التسليم: المطبخ راكب على الحائط جاهز للاستخدام
-━━━━━━━━━━━━━━━━━━━━━━━
-هذا العقد موقع من الطرفين:
-توقيع العميل: ___________
-توقيع المصنع: ___________
-تاريخ العقد: ${new Date().toLocaleDateString('ar-EG')}
-            `;
-            
-            alert(contract);
-            window.open(`https://wa.me/201144265938?text=${encodeURIComponent(contract)}`, '_blank');
-            closeModal('contractModal');
-            document.getElementById('contractName').value = '';
-            document.getElementById('contractPhone').value = '';
-            document.getElementById('contractProduct').value = '';
-            document.getElementById('contractPrice').value = '';
-            document.getElementById('contractNotes').value = '';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // لوحة التحكم
-        let clickCount = 0;
-        let clickTimer = null;
-        
-        document.getElementById('secretLogo').addEventListener('click', function() {
-            clickCount++;
-            clearTimeout(clickTimer);
-            clickTimer = setTimeout(() => {
-                if(clickCount >= 3) {
-                    const password = prompt("🔐 كلمة السر:");
-                    if(password === "13579") {
-                        document.getElementById('adminPanel').classList.add('active');
-                        updateStats();
-                        showProductsManager();
-                    } else if(password !== null) {
-                        alert("❌ كلمة سر خاطئة");
-                    }
-                }
-                clickCount = 0;
-            }, 500);
+            snap.forEach(child => { grid.innerHTML += createCard(child.val()); });
         });
-
-        function updateStats() {
-            db.ref('stats/visitors').once('value').then(s => {
-                document.getElementById('statVisitors').innerText = s.val() || 0;
-            });
-            db.ref('inspections').once('value').then(s => {
-                let count = 0;
-                s.forEach(() => count++);
-                document.getElementById('statInspections').innerText = count;
-            });
-            db.ref('stats/pageViews').once('value').then(s => {
-                document.getElementById('statPageViews').innerText = s.val() || 0;
-            });
-        }
-
-        function showProductsManager() {
-            db.ref('products').once('value').then(snap => {
-                let html = '<button onclick="showAddProductForm()" style="background:var(--gold); border:none; padding:10px; width:100%; border-radius:30px; margin-bottom:15px; font-weight:700; cursor:pointer;">+ إضافة منتج جديد</button>';
-                html += '<div style="max-height:300px; overflow-y:auto;">';
-                snap.forEach(child => {
-                    const p = child.val();
-                    const discountBadge = p.discount ? `خصم ${p.discount}%` : 'لا يوجد خصم';
-                    html += `
-                        <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid #ddd;">
-                            <div>
-                                <strong>${p.name}</strong><br>
-                                <span style="color:var(--gold);">${p.price} جنيه</span>
-                                ${p.discount ? `<span style="color:red; font-size:0.8rem;"> | 🔥 خصم ${p.discount}%</span>` : ''}
-                            </div>
-                            <div>
-                                <button onclick="editProduct('${child.key}', '${p.name}', '${p.price}', '${p.url}', '${p.discount || 0}')" style="background:var(--gold); border:none; padding:5px 12px; border-radius:15px; margin:2px; cursor:pointer;"><i class="fas fa-edit"></i></button>
-                                <button onclick="deleteProduct('${child.key}')" style="background:red; color:white; border:none; padding:5px 12px; border-radius:15px; margin:2px; cursor:pointer;"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-                document.getElementById('adminContent').innerHTML = html;
-            });
-        }
-
-        function showAddProductForm() {
-            document.getElementById('adminContent').innerHTML = `
-                <h4 style="margin-bottom:10px;">إضافة منتج جديد</h4>
-                <input type="text" id="newUrl" placeholder="رابط الصورة" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <input type="text" id="newName" placeholder="اسم المنتج (مثال: المنيوم فرنساوي - رخام جلالة)" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <input type="number" id="newPrice" placeholder="السعر الأساسي (للمتر المربع)" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <input type="number" id="newDiscount" placeholder="نسبة الخصم (مثال: 20 يعني 20%)" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <small style="color:#666;">💡 اترك الخصم 0 إذا لا يوجد تخفيض</small>
-                <button onclick="addNewProduct()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px; margin-top:10px; font-weight:700; cursor:pointer;">نشر المنتج</button>
-                <button onclick="showProductsManager()" style="background:#eee; border:none; padding:10px; width:100%; border-radius:30px; margin-top:8px; cursor:pointer;">رجوع</button>
-            `;
-        }
-
-        function addNewProduct() {
-            const url = document.getElementById('newUrl')?.value.trim();
-            const name = document.getElementById('newName')?.value.trim();
-            const price = document.getElementById('newPrice')?.value.trim();
-            const discount = document.getElementById('newDiscount')?.value.trim();
-            
-            if(!url || !name || !price) {
-                alert("رابط الصورة واسم المنتج والسعر مطلوبين");
-                return;
-            }
-            
-            db.ref('products').push({
-                url: url,
-                name: name,
-                price: price,
-                discount: discount ? parseInt(discount) : 0
-            }).then(() => {
-                alert("✅ تم إضافة المنتج بنجاح");
-                loadProducts();
-                showProductsManager();
-            });
-        }
-
-        function editProduct(id, oldName, oldPrice, oldUrl, oldDiscount) {
-            document.getElementById('adminContent').innerHTML = `
-                <h4 style="margin-bottom:10px;">تعديل المنتج</h4>
-                <input type="text" id="editUrl" value="${oldUrl}" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <input type="text" id="editName" value="${oldName}" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <input type="number" id="editPrice" value="${oldPrice}" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <input type="number" id="editDiscount" value="${oldDiscount}" placeholder="نسبة الخصم" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ddd;">
-                <button onclick="updateProduct('${id}')" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px; margin-top:10px; font-weight:700; cursor:pointer;">حفظ التعديلات</button>
-                <button onclick="showProductsManager()" style="background:#eee; border:none; padding:10px; width:100%; border-radius:30px; margin-top:8px; cursor:pointer;">رجوع</button>
-            `;
-        }
-
-        function updateProduct(id) {
-            const url = document.getElementById('editUrl')?.value.trim();
-            const name = document.getElementById('editName')?.value.trim();
-            const price = document.getElementById('editPrice')?.value.trim();
-            const discount = document.getElementById('editDiscount')?.value.trim();
-            
-            if(!url || !name || !price) {
-                alert("رابط الصورة واسم المنتج والسعر مطلوبين");
-                return;
-            }
-            
-            db.ref(`products/${id}`).update({
-                url: url,
-                name: name,
-                price: price,
-                discount: discount ? parseInt(discount) : 0
-            }).then(() => {
-                alert("✅ تم تعديل المنتج بنجاح");
-                loadProducts();
-                showProductsManager();
-            });
-        }
-
-        function deleteProduct(id) {
-            if(confirm("هل أنت متأكد من حذف هذا المنتج؟")) {
-                db.ref(`products/${id}`).remove().then(() => {
-                    alert("✅ تم حذف المنتج");
-                    loadProducts();
-                    showProductsManager();
-                });
-            }
-        }
-
-        function showOrdersManager() {
-            db.ref('orders').once('value').then(snap => {
-                let html = '<div style="max-height:350px; overflow-y:auto;">';
-                if(!snap.exists()) {
-                    html += '<div style="text-align:center; padding:20px;">لا توجد طلبات حتى الآن</div>';
-                } else {
-                    snap.forEach(child => {
-                        const o = child.val();
-                        html += `
-                            <div style="border:1px solid #ddd; padding:12px; margin:10px 0; border-radius:12px;">
-                                <div><strong>${o.customer}</strong> | 📞 ${o.phone}</div>
-                                <div>💰 ${o.total} جنيه | 💳 ${o.payment}</div>
-                                <div>📌 الحالة: ${o.status} | 🕐 ${o.date}</div>
-                                <button onclick="updateOrderStatus('${child.key}')" style="background:var(--gold); border:none; padding:6px 15px; border-radius:20px; margin-top:8px; cursor:pointer;">تغيير الحالة</button>
-                            </div>
-                        `;
-                    });
-                }
-                html += '</div>';
-                document.getElementById('adminContent').innerHTML = html;
-            });
-        }
-
-        function updateOrderStatus(orderId) {
-            const newStatus = prompt("الحالة الجديدة (جديد / قيد التجهيز / تم التوصيل):");
-            if(newStatus) {
-                db.ref(`orders/${orderId}`).update({ status: newStatus }).then(() => {
-                    alert("✅ تم تحديث الحالة");
-                    showOrdersManager();
-                });
-            }
-        }
-
-        loadProducts();
-        updateStats();
-    </script>
+    }
+    
+    function createCard(p) {
+        const final = p.price - (p.price * (p.discount||0)/100);
+        const disc = (p.discount && p.discount>0) ? `<div class="discount-badge">🔥 خصم ${p.discount}%</div>` : '';
+        return `<div class="product-card" onclick='showDetail(${JSON.stringify(p).replace(/'/g,"\\'")})'><div style="position:relative;">${disc}<img src="${p.url}" class="product-img"><div class="quality-badge"><i class="fas fa-certificate"></i> ضمان 5 سنوات</div></div><div class="product-info"><h4>${p.name}</h4><div class="price">${final} جنيه / م²</div>${p.discount ? `<div style="font-size:0.8rem;"><del>${p.price} جنيه</del></div>` : ''}</div></div>`;
+    }
+    
+    function showDetail(p) {
+        const final = p.price - (p.price * (p.discount||0)/100);
+        const content = `<img src="${p.url}" style="width:100%; max-height:400px; object-fit:cover; border-radius:20px;"><h2 style="color:var(--gold); margin:15px 0;">${p.name}</h2><div style="font-size:1.5rem; font-weight:900; color:var(--gold);">${final} جنيه للمتر المربع</div>${p.discount ? `<div style="color:red;">السعر الأصلي: ${p.price} جنيه - خصم ${p.discount}%</div>` : ''}<div style="background:#f5f5f5; padding:15px; border-radius:15px; margin:15px 0;"><strong>المواصفات:</strong><br>${p.specs || 'خامات فاخرة، ضجه سيستيم، تشطيب احترافي.'}</div><div style="background:var(--dark); padding:15px; border-radius:15px; color:white;"><strong>الضمان:</strong><br>✓ 5 سنوات ضد عيوب الصناعة<br>✓ عقد اتفاق موقع<br>✓ توصيل وتركيب</div><div style="display:flex; gap:10px; margin:15px 0;"><button onclick="addToCart('${p.name}', ${final}); closeModal('productModal');" style="flex:1; background:var(--gold); border:none; padding:12px; border-radius:30px; font-weight:700; cursor:pointer;"><i class="fas fa-cart-plus"></i> أضف للسلة</button><a href="https://wa.me/201144265938?text=السلام عليكم مهندس، أنا مهتم بـ ${p.name}" target="_blank" style="flex:1; background:var(--whatsapp); color:white; text-decoration:none; text-align:center; padding:12px; border-radius:30px; font-weight:700;"><i class="fab fa-whatsapp"></i> واتساب</a></div><button onclick="openInspectModal(); closeModal('productModal');" style="width:100%; background:var(--dark); color:white; border:none; padding:12px; border-radius:30px; font-weight:700; cursor:pointer;"><i class="fas fa-eye"></i> معاينة مجانية</button>`;
+        document.getElementById('productModalContent').innerHTML = content;
+        document.getElementById('productModal').classList.add('active');
+    }
+    
+    let clickCount=0, clickTimer;
+    document.getElementById('secretLogo').addEventListener('click',()=>{
+        clickCount++;
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(()=>{
+            if(clickCount>=3){ const pwd=prompt("كلمة السر:"); if(pwd==="13579"){ document.getElementById('adminPanel').classList.add('active'); updateAdminStats(); showProductsManager(); } else if(pwd) showToast("خطأ"); }
+            clickCount=0;
+        },500);
+    });
+    
+    function closeAdminPanel(){ document.getElementById('adminPanel').classList.remove('active'); }
+    function updateAdminStats(){
+        db.ref('stats/visitors').once('value').then(s=>document.getElementById('statVisitors').innerText=s.val()||0);
+        db.ref('inspections').once('value').then(s=>{let c=0; s.forEach(()=>c++); document.getElementById('statInspections').innerText=c;});
+        db.ref('orders').once('value').then(s=>{let c=0; s.forEach(()=>c++); document.getElementById('statOrders').innerText=c;});
+        db.ref('products').once('value').then(s=>{let c=0; s.forEach(()=>c++); document.getElementById('statProducts').innerText=c;});
+    }
+    function showProductsManager(){
+        db.ref('products').once('value').then(snap=>{
+            let html='<div style="max-height:500px; overflow-y:auto;">';
+            if(!snap.exists()) html+='<div>لا توجد منتجات</div>';
+            else snap.forEach(c=>{ const p=c.val(); html+=`<div class="product-item"><div><strong>${p.name}</strong><br>${p.price} جنيه</div><div><button onclick='editProduct("${c.key}",${JSON.stringify(p).replace(/'/g,"\\'")})' style="background:var(--gold); border:none; padding:6px 15px; border-radius:20px;"><i class="fas fa-edit"></i></button><button onclick="deleteProduct('${c.key}')" style="background:red; color:white; border:none; padding:6px 15px; border-radius:20px;"><i class="fas fa-trash"></i></button></div></div>`; });
+            html+='</div>';
+            document.getElementById('adminContent').innerHTML=html;
+        });
+    }
+    function showAddProductForm(){ document.getElementById('adminContent').innerHTML=`<h3>➕ إضافة منتج</h3><input type="text" id="prodName" placeholder="اسم المنتج" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;"><input type="number" id="prodPrice" placeholder="السعر" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;"><input type="number" id="prodDiscount" placeholder="الخصم%" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;"><input type="text" id="prodImage" placeholder="رابط الصورة" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;"><textarea id="prodSpecs" placeholder="المواصفات" rows="3" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;"></textarea><button onclick="saveProduct()" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px;">💾 حفظ</button><button onclick="showProductsManager()" style="background:#eee; border:none; padding:10px; width:100%; border-radius:30px; margin-top:8px;">رجوع</button>`; }
+    function saveProduct(){ const name=document.getElementById('prodName')?.value, price=document.getElementById('prodPrice')?.value, img=document.getElementById('prodImage')?.value; if(!name||!price||!img){ showToast("املأ البيانات"); return; } db.ref('products').push({ name, price:parseInt(price), discount:parseInt(document.getElementById('prodDiscount')?.value)||0, specs:document.getElementById('prodSpecs')?.value||'', url:img }).then(()=>{ showToast("✅ تم الإضافة"); loadProducts(); showProductsManager(); updateAdminStats(); }); }
+    function editProduct(id,p){ document.getElementById('adminContent').innerHTML=`<h3>✏️ تعديل</h3><input type="text" id="editName" value="${p.name}" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;"><input type="number" id="editPrice" value="${p.price}" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;"><input type="number" id="editDiscount" value="${p.discount||0}" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;"><input type="text" id="editImage" value="${p.url}" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;"><textarea id="editSpecs" rows="3" style="width:100%; padding:12px; margin:8px 0; border-radius:10px;">${p.specs||''}</textarea><button onclick="updateProduct('${id}')" style="background:var(--gold); border:none; padding:12px; width:100%; border-radius:30px;">💾 تحديث</button><button onclick="showProductsManager()" style="background:#eee; border:none; padding:10px; width:100%; border-radius:30px; margin-top:8px;">رجوع</button>`; }
+    function updateProduct(id){ const name=document.getElementById('editName')?.value, price=document.getElementById('editPrice')?.value; if(!name||!price){ showToast("املأ البيانات"); return; } db.ref(`products/${id}`).update({ name, price:parseInt(price), discount:parseInt(document.getElementById('editDiscount')?.value)||0, specs:document.getElementById('editSpecs')?.value||'', url:document.getElementById('editImage')?.value||'' }).then(()=>{ showToast("✅ تم التحديث"); loadProducts(); showProductsManager(); }); }
+    function deleteProduct(id){ if(confirm("تأكيد الحذف؟")) db.ref(`products/${id}`).remove().then(()=>{ showToast("✅ تم الحذف"); loadProducts(); showProductsManager(); updateAdminStats(); }); }
+    function showOrdersManager(){
+        db.ref('orders').once('value').then(snap=>{
+            let html='<div style="max-height:500px; overflow-y:auto;">';
+            if(!snap.exists()) html+='<div>لا توجد طلبات</div>';
+            else snap.forEach(c=>{ const o=c.val(); html+=`<div style="border:1px solid #ddd; padding:15px; margin:10px 0; border-radius:15px;"><div><strong>${o.customer}</strong> | 📞 ${o.phone}</div><div>💰 ${o.total} جنيه | ${o.payment}</div><div>📌 ${o.status} | 🕐 ${o.date}</div><select id="status-${c.key}" style="margin-top:8px; padding:6px; border-radius:10px;"><option ${o.status==='جديد'?'selected':''}>جديد</option><option ${o.status==='قيد التجهيز'?'selected':''}>قيد التجهيز</option><option ${o.status==='تم التوصيل'?'selected':''}>تم التوصيل</option></select><button onclick="updateStatus('${c.key}')" style="background:var(--gold); border:none; padding:6px 15px; border-radius:20px; margin-top:8px;">تحديث</button></div>`; });
+            html+='</div>';
+            document.getElementById('adminContent').innerHTML=html;
+        });
+    }
+    function updateStatus(id){ const newStatus=document.getElementById(`status-${id}`).value; db.ref(`orders/${id}`).update({ status:newStatus }).then(()=>{ showToast("✅ تم التحديث"); showOrdersManager(); }); }
+    function showInspectionsManager(){
+        db.ref('inspections').once('value').then(snap=>{
+            let html='<div style="max-height:500px; overflow-y:auto;">';
+            if(!snap.exists()) html+='<div>لا توجد طلبات</div>';
+            else snap.forEach(c=>{ const i=c.val(); html+=`<div style="border:1px solid #ddd; padding:15px; margin:10px 0; border-radius:15px;"><div><strong>${i.name}</strong> | 📞 ${i.phone}</div><div>📍 ${i.address||'غير محدد'}</div><div>🕐 ${i.date}</div></div>`; });
+            html+='</div>';
+            document.getElementById('adminContent').innerHTML=html;
+        });
+    }
+    
+    let vid=localStorage.getItem('visitorId');
+    if(!vid){ vid=Date.now()+'-'+Math.random(); localStorage.setItem('visitorId',vid); db.ref('stats/visitors').transaction(v=>(v||0)+1); }
+    db.ref('stats/pageViews').transaction(pv=>(pv||0)+1);
+    loadProducts();
+</script>
 </body>
 </html>
